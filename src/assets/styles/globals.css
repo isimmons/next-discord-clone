@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --scrollbar-thumb: rgba(30, 41, 59, 0.25);
+    --scrollbar-track: rgba(100, 116, 139, 0.25);
+    --scrollbar-thumb-hover: rgba(30, 41, 59, 0.75);
+    --scrollbar-track-hover: rgba(100, 116, 139, 0.5);
+  }
+}
+
+/* hide scrollbar (not good idea for UI)*/
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /*IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* style scrollbar (better idea than hiding) */
+@layer utilities {
+  .scrollbar-fix::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-fix::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 100vw;
+  }
+  .scrollbar-fix::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 100vw;
+  }
+
+  .scrollbar-fix:hover::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-hover);
+  }
+  .scrollbar-fix:hover::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-hover);
+  }
+
+  .scrollbar-fix {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  .scrollbar-fix:hover {
+    scrollbar-color: var(--scrollbar-thumb-hover) var(--scrollbar-track-hover);
+  }
+}
+
+@font-face {
+  font-family: "Whitney";
+  src: url("/fonts/whitney/whitney-light.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Whitney";
+  src: url("/fonts/whitney/whitney-book.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Whitney";
+  src: url("/fonts/whitney/whitney-medium.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Whitney";
+  src: url("/fonts/whitney/whitney-semibold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ginto";
+  src: url("/fonts/ginto/ginto-semibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}

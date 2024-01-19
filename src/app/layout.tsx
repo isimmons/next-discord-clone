@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import favicon from "~/assets/favicon.png";
+import Document from "./Document";
+import "~/assets/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href={favicon.src} sizes="any" />
+      </head>
+      <body>
+        <Document>{children}</Document>
+      </body>
     </html>
   );
 }
