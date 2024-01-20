@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { servers, fakeChannels, fakeMessages } from "~/data";
-
+import { capitalize } from "~/utils";
 type Props = {
   params: { serverId: string };
 };
@@ -15,7 +15,7 @@ const ServerPage = ({ params }: Props) => {
     <>
       <div className="bg-gray-800 w-60 flex flex-col">
         <div className="px-3 h-12 shadow-md flex items-center font-title text-white">
-          {server.name.toUpperCase()}
+          {capitalize(server.name)}
         </div>
         <div className="text-gray-300 font-medium flex-1 p-3 overflow-y-scroll scrollbar-fix space-y-2">
           <p className="text-white">channel (unread)</p>
