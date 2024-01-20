@@ -1,3 +1,10 @@
+export const servers = [
+  { id: "1", name: "tailwindcss", img: "tailwind.png" },
+  { id: "2", name: "nextjs", img: "next.png" },
+  { id: "3", name: "mirage", img: "mirage.png" },
+  { id: "4", name: "pinia", img: "pinia.webp" },
+];
+
 export const fakeServers = [
   "RI",
   "GS",
