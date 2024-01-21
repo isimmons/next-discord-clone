@@ -39,12 +39,25 @@ export const CheckIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const ChevronIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const ChevronDownIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 18 18" fill="none" {...props}>
       <path
         d="M5.20711 5.54289C4.81658 5.15237 4.18342 5.15237 3.79289 5.54289C3.40237 5.93342 3.40237 6.56658 3.79289 6.95711L5.20711 5.54289ZM9 10.75L8.29289 11.4571C8.68342 11.8476 9.31658 11.8476 9.70711 11.4571L9 10.75ZM14.2071 6.95711C14.5976 6.56658 14.5976 5.93342 14.2071 5.54289C13.8166 5.15237 13.1834 5.15237 12.7929 5.54289L14.2071 6.95711ZM3.79289 6.95711L8.29289 11.4571L9.70711 10.0429L5.20711 5.54289L3.79289 6.95711ZM9.70711 11.4571L14.2071 6.95711L12.7929 5.54289L8.29289 10.0429L9.70711 11.4571Z"
         fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const ChevronDownSmallIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+  return (
+    <svg viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"
       />
     </svg>
   );
@@ -69,19 +82,6 @@ export const SpeakerphoneIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       <path
         d="M3.9 8.26H2v7.034h1.9V8.26zM19.1 4v1.127L4.85 8.264v9.854c0 .432.296.807.72.914l3.8.94a.954.954 0 00.99-.35l2.347-3.098L19.1 17.93v1.129H21V4h-1.9zM9.218 17.994l-2.468-.611V15.21l3.92.864-1.452 1.92z"
         fill="currentColor"
-      />
-    </svg>
-  );
-};
-
-export const ArrowComponent: FC<SVGProps<SVGSVGElement>> = (props) => {
-  return (
-    <svg viewBox="0 0 24 24" {...props}>
-      <path
-        fill="currentColor"
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"
       />
     </svg>
   );
