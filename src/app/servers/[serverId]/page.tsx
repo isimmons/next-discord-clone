@@ -1,5 +1,12 @@
 import { notFound } from "next/navigation";
-import { CheckIcon, ChevronIcon, VerifiedIcon } from "~/components/Icons";
+import {
+  AddPersonIcon,
+  BookIcon,
+  CheckIcon,
+  ChevronIcon,
+  SpeakerphoneIcon,
+  VerifiedIcon,
+} from "~/components/Icons";
 import { servers, fakeChannels, fakeMessages } from "~/data";
 
 type Props = {
@@ -23,12 +30,26 @@ const ServerPage = ({ params }: Props) => {
           {server.name}
           <ChevronIcon className="size-[18px] ml-auto opacity-80" />
         </button>
-        <div className="text-gray-300 font-medium flex-1 p-3 overflow-y-scroll scrollbar-fix space-y-2">
-          <p className="text-white">channel (unread)</p>
-          <p className="text-white">channel (unread)</p>
-          {fakeChannels.map((channel, index) => (
-            <p key={index}>{channel}</p>
-          ))}
+
+        <div className="text-gray-300 font-medium flex-1 overflow-y-scroll scrollbar-fix mt-[17px]">
+          <div className="space-y-0.5">
+            <a
+              href="#"
+              className="flex group items-center px-2 mx-2 py-1 rounded text-gray-300 hover:bg-gray-550/[0.16] hover:text-gray-100"
+            >
+              <BookIcon className="size-5 mr-1.5 text-gray-400 " />
+              welcome
+              <AddPersonIcon className="size-4 ml-auto text-gray-200 opacity-0 group-hover:opacity-100 hover:text-gray-100" />
+            </a>
+            <a
+              href="#"
+              className="flex group items-center px-2 mx-2 py-1 rounded text-gray-300 hover:bg-gray-550/[0.16] hover:text-gray-100"
+            >
+              <SpeakerphoneIcon className="size-5 mr-1.5 text-gray-400 " />
+              announcements
+              <AddPersonIcon className="size-4 ml-auto text-gray-200 opacity-0 group-hover:opacity-100 hover:text-gray-100" />
+            </a>
+          </div>
         </div>
       </div>
       <div className="bg-gray-700 flex-1 flex flex-col">
