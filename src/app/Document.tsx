@@ -1,5 +1,5 @@
 import Image from "next/image";
-import DiscordIcon from "~/components/DiscordIcon";
+import { DiscordIcon } from "~/components/Icons";
 import ServerLink from "~/components/ServerLink";
 import { servers } from "~/data";
 
