@@ -1,6 +1,6 @@
 import { FC, SVGProps } from 'react';
 
-export const DiscordIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Discord: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg aria-hidden="false" viewBox="0 0 28 20" {...props}>
       <path
@@ -11,7 +11,7 @@ export const DiscordIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const VerifiedIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Verified: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
       aria-label="Verified"
@@ -28,7 +28,7 @@ export const VerifiedIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const CheckIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Check: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg aria-hidden="false" viewBox="0 0 16 15.2" {...props}>
       <path
@@ -39,7 +39,7 @@ export const CheckIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const ChevronDownIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const ChevronDown: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 18 18" fill="none" {...props}>
       <path
@@ -50,7 +50,7 @@ export const ChevronDownIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const ChevronDownSmallIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const ChevronDownSmall: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 24 24" {...props}>
       <path
@@ -63,7 +63,7 @@ export const ChevronDownSmallIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const BookIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Book: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 40 40" {...props}>
       <path
@@ -76,7 +76,7 @@ export const BookIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const SpeakerphoneIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Speakerphone: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 24 24" {...props}>
       <path
@@ -87,7 +87,7 @@ export const SpeakerphoneIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const AddPersonIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const AddPerson: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 16 16" {...props}>
       <path
@@ -98,7 +98,7 @@ export const AddPersonIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const HashtagIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Hashtag: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 24 24" {...props}>
       <path
