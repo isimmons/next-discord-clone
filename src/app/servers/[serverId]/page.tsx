@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation';
 import {
   AddPersonIcon,
   BookIcon,
@@ -7,8 +7,8 @@ import {
   ChevronDownSmallIcon,
   SpeakerphoneIcon,
   VerifiedIcon,
-} from "~/components/Icons";
-import { servers, fakeChannels, fakeMessages } from "~/data";
+} from '~/components/Icons';
+import { servers, fakeChannels, fakeMessages } from '~/data';
 
 type Props = {
   params: { serverId: string };
