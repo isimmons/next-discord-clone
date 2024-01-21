@@ -3,7 +3,8 @@ import {
   AddPersonIcon,
   BookIcon,
   CheckIcon,
-  ChevronIcon,
+  ChevronDownIcon,
+  ChevronDownSmallIcon,
   SpeakerphoneIcon,
   VerifiedIcon,
 } from "~/components/Icons";
@@ -21,42 +22,49 @@ const ServerPage = ({ params }: Props) => {
   if (!server) notFound();
   return (
     <>
-      <div className="bg-gray-800 w-60 flex flex-col">
-        <button className="px-4 h-12 shadow-sm flex items-center font-title text-white text-[15px] hover:bg-gray-550/[0.16] transition">
-          <div className="relative size-4 mr-1">
-            <VerifiedIcon className="size-4 text-gray-550 absolute" />
-            <CheckIcon className="size-4 absolute" />
+      <div className="flex w-60 flex-col bg-gray-800">
+        <button className="flex h-12 items-center px-4 font-title text-[15px] text-white shadow-sm transition hover:bg-gray-550/[0.16]">
+          <div className="relative mr-1 size-4">
+            <VerifiedIcon className="absolute size-4 text-gray-550" />
+            <CheckIcon className="absolute size-4" />
           </div>
           {server.name}
-          <ChevronIcon className="size-[18px] ml-auto opacity-80" />
+          <ChevronDownIcon className="ml-auto size-[18px] opacity-80" />
         </button>
 
-        <div className="text-gray-300 font-medium flex-1 overflow-y-scroll scrollbar-fix mt-[17px]">
+        <div className="scrollbar-fix mt-[17px] flex-1 overflow-y-scroll font-medium text-gray-300">
           <div className="space-y-0.5">
             <a
               href="#"
-              className="flex group items-center px-2 mx-2 py-1 rounded text-gray-300 hover:bg-gray-550/[0.16] hover:text-gray-100"
+              className="group mx-2 flex items-center rounded px-2 py-1 text-gray-300 hover:bg-gray-550/[0.16] hover:text-gray-100"
             >
-              <BookIcon className="size-5 mr-1.5 text-gray-400 " />
+              <BookIcon className="mr-1.5 size-5 text-gray-400 " />
               welcome
-              <AddPersonIcon className="size-4 ml-auto text-gray-200 opacity-0 group-hover:opacity-100 hover:text-gray-100" />
+              <AddPersonIcon className="ml-auto size-4 text-gray-200 opacity-0 hover:text-gray-100 group-hover:opacity-100" />
             </a>
             <a
               href="#"
-              className="flex group items-center px-2 mx-2 py-1 rounded text-gray-300 hover:bg-gray-550/[0.16] hover:text-gray-100"
+              className="group mx-2 flex items-center rounded px-2 py-1 text-gray-300 hover:bg-gray-550/[0.16] hover:text-gray-100"
             >
-              <SpeakerphoneIcon className="size-5 mr-1.5 text-gray-400 " />
+              <SpeakerphoneIcon className="mr-1.5 size-5 text-gray-400 " />
               announcements
-              <AddPersonIcon className="size-4 ml-auto text-gray-200 opacity-0 group-hover:opacity-100 hover:text-gray-100" />
+              <AddPersonIcon className="ml-auto size-4 text-gray-200 opacity-0 hover:text-gray-100 group-hover:opacity-100" />
             </a>
+          </div>
+
+          <div className="mt-5">
+            <button className="flex items-center px-1 font-title text-xs uppercase">
+              <ChevronDownSmallIcon className="size-3" />
+              Tailwind CSS
+            </button>
           </div>
         </div>
       </div>
-      <div className="bg-gray-700 flex-1 flex flex-col">
-        <div className="h-12 px-3 shadow-sm flex items-center font-title">
+      <div className="flex flex-1 flex-col bg-gray-700">
+        <div className="flex h-12 items-center px-3 font-title shadow-sm">
           General
         </div>
-        <div className="flex-1 px-3 overflow-y-scroll space-y-4 scrollbar-fix">
+        <div className="scrollbar-fix flex-1 space-y-4 overflow-y-scroll px-3">
           {fakeMessages.map((value, index) => (
             <p key={index}>{`Message ${index + 1}: ${value}`}</p>
           ))}
