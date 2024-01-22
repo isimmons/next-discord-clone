@@ -30,7 +30,7 @@ const ServerPage = ({ params }: Props) => {
           {data[1].categories.map((category) => (
             <div key={category.id}>
               {category.label && (
-                <button className="flex items-center px-0.5 font-title text-xs uppercase tracking-wide">
+                <button className="flex w-full items-center px-0.5 font-title text-xs uppercase tracking-wide hover:text-gray-100">
                   <Icons.ChevronDownSmall className="mr-0.5 size-3" />
                   {category.label}
                 </button>
