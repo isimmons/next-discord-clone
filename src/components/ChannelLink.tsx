@@ -1,15 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { notFound, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import * as Icons from '~/components/Icons';
+import { type Channel } from '~/types';
 
 type Props = {
-  channel: {
-    id: number;
-    label: string;
-    icon?: string;
-  };
+  channel: Channel;
 };
 
 const ChannelLink = ({ channel }: Props) => {
