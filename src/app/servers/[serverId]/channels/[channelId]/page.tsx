@@ -1,18 +1,30 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import { MouseEventHandler, useState } from 'react';
 import ChannelLink from '~/components/ChannelLink';
 import * as Icons from '~/components/Icons';
 import { servers, fakeMessages } from '~/data';
 import data from '~/data/categories.json';
+import { Category } from '~/types';
 
 type Props = {
   params: { serverId: string };
 };
 
 const ServerPage = ({ params }: Props) => {
-  const [closedCategories, setClosedCategories] = useState([]);
-  const toggleCategory: MouseEventHandler<HTMLButtonElement> =
-    (event) => (id: number) => {};
+  const [closedCategories, setClosedCategories] = useState<Array<number>>([]);
+  const categories: Array<Category> = data[1].categories;
+
+  const toggleCategory: (
+    categoryId: number,
+  ) => MouseEventHandler<HTMLButtonElement> = (categoryId: number) => () => {
+    setClosedCategories((closedCategories) =>
+      closedCategories.includes(categoryId)
+        ? closedCategories.filter((cid) => cid !== categoryId)
+        : [...closedCategories, categoryId],
+    );
+  };
 
   const serverId = parseInt(params.serverId);
   if (isNaN(serverId)) notFound();
@@ -32,22 +44,29 @@ const ServerPage = ({ params }: Props) => {
         </button>
 
         <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
-          {data[1].categories.map((category) => (
+          {categories.map((category) => (
             <div key={category.id}>
               {category.label && (
                 <button
                   onClick={toggleCategory(category.id)}
                   className="flex w-full items-center px-0.5 font-title text-xs uppercase tracking-wide hover:text-gray-100"
                 >
-                  <Icons.ChevronDownSmall className="mr-0.5 size-3" />
+                  <Icons.ChevronDownSmall
+                    className={`${closedCategories.includes(category.id) ? '-rotate-90' : ''} mr-0.5 size-3 transition duration-200`}
+                  />
                   {category.label}
                 </button>
               )}
 
               <div className="mt-[5px] space-y-0.5">
-                {category.channels.map((channel) => (
-                  <ChannelLink key={channel.id} channel={channel} />
-                ))}
+                {category.channels
+                  .filter(
+                    (channel) =>
+                      !closedCategories.includes(category.id) || channel.unread,
+                  )
+                  .map((channel) => (
+                    <ChannelLink key={channel.id} channel={channel} />
+                  ))}
               </div>
             </div>
           ))}
