@@ -4,3 +4,9 @@ export type Channel = {
   icon?: string;
   unread?: boolean;
 };
+
+export type Category = {
+  id: number;
+  label: string;
+  channels: Array<Channel>;
+};
