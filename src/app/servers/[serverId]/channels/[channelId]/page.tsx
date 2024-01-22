@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { MouseEventHandler, useState } from 'react';
 import ChannelLink from '~/components/ChannelLink';
 import * as Icons from '~/components/Icons';
 import { servers, fakeMessages } from '~/data';
@@ -9,6 +10,10 @@ type Props = {
 };
 
 const ServerPage = ({ params }: Props) => {
+  const [closedCategories, setClosedCategories] = useState([]);
+  const toggleCategory: MouseEventHandler<HTMLButtonElement> =
+    (event) => (id: number) => {};
+
   const serverId = parseInt(params.serverId);
   if (isNaN(serverId)) notFound();
 
@@ -30,7 +35,10 @@ const ServerPage = ({ params }: Props) => {
           {data[1].categories.map((category) => (
             <div key={category.id}>
               {category.label && (
-                <button className="flex w-full items-center px-0.5 font-title text-xs uppercase tracking-wide hover:text-gray-100">
+                <button
+                  onClick={toggleCategory(category.id)}
+                  className="flex w-full items-center px-0.5 font-title text-xs uppercase tracking-wide hover:text-gray-100"
+                >
                   <Icons.ChevronDownSmall className="mr-0.5 size-3" />
                   {category.label}
                 </button>
