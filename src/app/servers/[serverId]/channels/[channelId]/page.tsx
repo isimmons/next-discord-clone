@@ -1,30 +1,27 @@
 'use client';
 
-import { notFound } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { notFound, useSearchParams } from 'next/navigation';
 import { MouseEventHandler, useState } from 'react';
-import ChannelLink from '~/components/ChannelLink';
-import ChannelLinks from '~/components/ChannelLinks';
+import Category from '~/components/Category';
 import * as Icons from '~/components/Icons';
 import { servers, fakeMessages } from '~/data';
 import data from '~/data/categories.json';
-import { Category } from '~/types';
 
 type Props = {
   params: { serverId: string };
 };
 
 const ServerPage = ({ params }: Props) => {
+  const categories: Array<Category> = data[1].categories;
+
   const searchParams = useSearchParams();
-  const closedArray = searchParams.get('cc');
-  const initClosedCategories: { cc: Array<number> } = closedArray
-    ? JSON.parse(closedArray)
-    : JSON.parse('{ "cc": []}');
+  const initClosedCategories: { cc: Array<number> } = JSON.parse(
+    searchParams.get('cc') || '{ "cc": [] }',
+  );
 
   const [closedCategories, setClosedCategories] = useState<Array<number>>(
     initClosedCategories.cc,
   );
-  const categories: Array<Category> = data[1].categories;
 
   const toggleCategory: (
     categoryId: number,
@@ -56,24 +53,12 @@ const ServerPage = ({ params }: Props) => {
 
         <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
           {categories.map((category) => (
-            <div key={category.id}>
-              {category.label && (
-                <button
-                  onClick={toggleCategory(category.id)}
-                  className="flex w-full items-center px-0.5 font-title text-xs uppercase tracking-wide hover:text-gray-100"
-                >
-                  <Icons.ChevronDownSmall
-                    className={`${closedCategories.includes(category.id) ? '-rotate-90' : ''} mr-0.5 size-3 transition duration-200`}
-                  />
-                  {category.label}
-                </button>
-              )}
-
-              <ChannelLinks
-                category={category}
-                closedCategories={closedCategories}
-              />
-            </div>
+            <Category
+              key={category.id}
+              category={category}
+              closedCategories={closedCategories}
+              toggleCategory={toggleCategory}
+            />
           ))}
         </div>
       </div>
