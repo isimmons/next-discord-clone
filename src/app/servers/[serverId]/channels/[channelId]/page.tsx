@@ -16,12 +16,10 @@ type Props = {
 const ServerPage = ({ params }: Props) => {
   const searchParams = useSearchParams();
   const closedArray = searchParams.get('cc');
-  console.log(closedArray);
   const initClosedCategories: { cc: Array<number> } = closedArray
     ? JSON.parse(closedArray)
     : JSON.parse('{ "cc": []}');
 
-  console.log('init: ', initClosedCategories);
   const [closedCategories, setClosedCategories] = useState<Array<number>>(
     initClosedCategories.cc,
   );
