@@ -1,4 +1,3 @@
-'use client';
 import ChannelLink from './ChannelLink';
 import { Category } from '~/types';
 
