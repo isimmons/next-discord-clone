@@ -1,6 +1,7 @@
 'use client';
 
 import { notFound } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { MouseEventHandler, useState } from 'react';
 import ChannelLink from '~/components/ChannelLink';
 import * as Icons from '~/components/Icons';
@@ -13,7 +14,17 @@ type Props = {
 };
 
 const ServerPage = ({ params }: Props) => {
-  const [closedCategories, setClosedCategories] = useState<Array<number>>([]);
+  const searchParams = useSearchParams();
+  const closedArray = searchParams.get('cc');
+  console.log(closedArray);
+  const initClosedCategories: { cc: Array<number> } = closedArray
+    ? JSON.parse(closedArray)
+    : JSON.parse('{ "cc": []}');
+
+  console.log('init: ', initClosedCategories);
+  const [closedCategories, setClosedCategories] = useState<Array<number>>(
+    initClosedCategories.cc,
+  );
   const categories: Array<Category> = data[1].categories;
 
   const toggleCategory: (
@@ -31,6 +42,7 @@ const ServerPage = ({ params }: Props) => {
 
   const server = servers.find((s) => parseInt(s.id) === serverId);
   if (!server) notFound();
+
   return (
     <>
       <div className="flex w-60 flex-col bg-gray-800">
@@ -65,7 +77,11 @@ const ServerPage = ({ params }: Props) => {
                       !closedCategories.includes(category.id) || channel.unread,
                   )
                   .map((channel) => (
-                    <ChannelLink key={channel.id} channel={channel} />
+                    <ChannelLink
+                      key={channel.id}
+                      channel={channel}
+                      closedCategories={closedCategories}
+                    />
                   ))}
               </div>
             </div>

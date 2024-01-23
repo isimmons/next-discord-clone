@@ -7,9 +7,15 @@ import { type Channel } from '~/types';
 
 type Props = {
   channel: Channel;
+  closedCategories: number[];
 };
 
-const ChannelLink = ({ channel }: Props) => {
+const ChannelLink = ({ channel, closedCategories }: Props) => {
+  const closedCatQueryString =
+    closedCategories.length > 0
+      ? encodeURIComponent(JSON.stringify({ cc: closedCategories }))
+      : null;
+
   const params = useParams<{ channelId: string; serverId: string }>();
   const isActive = channel.id.toString() === params.channelId;
   const activeState = isActive
@@ -31,7 +37,7 @@ const ChannelLink = ({ channel }: Props) => {
     : Icons.Hashtag;
   return (
     <Link
-      href={`/servers/${params.serverId}/channels/${channel.id}`}
+      href={`/servers/${params.serverId}/channels/${channel.id}/?cc=${closedCatQueryString || ''}`}
       className={`${classNames[activeState]} group relative mx-2 flex items-center rounded px-2 py-1`}
     >
       {activeState === 'inactiveUnread' && (
