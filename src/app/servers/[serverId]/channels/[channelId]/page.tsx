@@ -1,11 +1,11 @@
 'use client';
 
-import { notFound, useSearchParams } from 'next/navigation';
-import { MouseEventHandler, useState } from 'react';
+import { notFound } from 'next/navigation';
 import Category from '~/components/Category';
 import * as Icons from '~/components/Icons';
 import { servers, fakeMessages } from '~/data';
 import data from '~/data/categories.json';
+import useCategories from '~/hooks/useCategories';
 
 type Props = {
   params: { serverId: string };
@@ -14,24 +14,7 @@ type Props = {
 const ServerPage = ({ params }: Props) => {
   const categories: Array<Category> = data[1].categories;
 
-  const searchParams = useSearchParams();
-  const initClosedCategories: { cc: Array<number> } = JSON.parse(
-    searchParams.get('cc') || '{ "cc": [] }',
-  );
-
-  const [closedCategories, setClosedCategories] = useState<Array<number>>(
-    initClosedCategories.cc,
-  );
-
-  const toggleCategory: (
-    categoryId: number,
-  ) => MouseEventHandler<HTMLButtonElement> = (categoryId: number) => () => {
-    setClosedCategories((closedCategories) =>
-      closedCategories.includes(categoryId)
-        ? closedCategories.filter((cid) => cid !== categoryId)
-        : [...closedCategories, categoryId],
-    );
-  };
+  const { closedCategories, toggleCategory } = useCategories();
 
   const serverId = parseInt(params.serverId);
   if (isNaN(serverId)) notFound();
