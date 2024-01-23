@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { MouseEventHandler, useState } from 'react';
 import ChannelLink from '~/components/ChannelLink';
+import ChannelLinks from '~/components/ChannelLinks';
 import * as Icons from '~/components/Icons';
 import { servers, fakeMessages } from '~/data';
 import data from '~/data/categories.json';
@@ -68,20 +69,10 @@ const ServerPage = ({ params }: Props) => {
                 </button>
               )}
 
-              <div className="mt-[5px] space-y-0.5">
-                {category.channels
-                  .filter(
-                    (channel) =>
-                      !closedCategories.includes(category.id) || channel.unread,
-                  )
-                  .map((channel) => (
-                    <ChannelLink
-                      key={channel.id}
-                      channel={channel}
-                      closedCategories={closedCategories}
-                    />
-                  ))}
-              </div>
+              <ChannelLinks
+                category={category}
+                closedCategories={closedCategories}
+              />
             </div>
           ))}
         </div>
