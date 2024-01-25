@@ -1,8 +1,8 @@
 import ChannelLink from './ChannelLink';
-import { Category } from '~/types';
+import { TCategory } from '~/types';
 
 type Props = {
-  category: Category;
+  category: TCategory;
   closedCategories: Array<number>;
 };
 

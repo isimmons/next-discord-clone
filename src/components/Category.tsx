@@ -1,10 +1,10 @@
 import { type MouseEventHandler } from 'react';
-import { type Category } from '~/types';
+import { type TCategory } from '~/types';
 import ChannelLinks from './ChannelLinks';
 import { ChevronDownSmall } from './Icons';
 
 type Props = {
-  category: Category;
+  category: TCategory;
   closedCategories: Array<number>;
   toggleCategory: (categoryId: number) => MouseEventHandler<HTMLButtonElement>;
 };

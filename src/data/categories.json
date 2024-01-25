@@ -6,7 +6,12 @@
         "id": 1,
         "label": "",
         "channels": [
-          { "id": 1, "label": "welcome", "icon": "Book" },
+          {
+            "id": 1,
+            "label": "welcome",
+            "description": "Introduction to the Tailwind CSS framework and community.",
+            "icon": "Book"
+          },
           { "id": 2, "label": "announcements", "icon": "Speakerphone" }
         ]
       },
@@ -14,38 +19,92 @@
         "id": 2,
         "label": "Tailwind CSS",
         "channels": [
-          { "id": 3, "label": "general", "unread": true },
+          {
+            "id": 3,
+            "label": "general",
+            "description": "General discussion of Tailwind CSS (please move off-topic discussion in the off-topic channels).",
+            "unread": true
+          },
           { "id": 4, "label": "plugins", "unread": true },
-          { "id": 5, "label": "help", "unread": true },
-          { "id": 6, "label": "internals" }
+          {
+            "id": 5,
+            "label": "help",
+            "description": "Help with Tailwind CSS and build process integration.",
+            "unread": true
+          },
+          {
+            "id": 6,
+            "label": "internals",
+            "description": "Development of the Tailwind CSS framework itself."
+          }
         ]
       },
       {
         "id": 3,
         "label": "Tailwind Labs",
         "channels": [
-          { "id": 7, "label": "tailwind-ui" },
-          { "id": 8, "label": "headless-ui" },
-          { "id": 9, "label": "refactoring-ui", "unread": true },
-          { "id": 10, "label": "heroicons", "unread": true }
+          {
+            "id": 7,
+            "label": "tailwind-ui",
+            "description": "General discussion of Tailwind UI."
+          },
+          {
+            "id": 8,
+            "label": "headless-ui",
+            "description": "General discussion of Headless UI."
+          },
+          {
+            "id": 9,
+            "label": "refactoring-ui",
+            "description": "General discussion of Refactoring UI.",
+            "unread": true
+          },
+          {
+            "id": 10,
+            "label": "heroicons",
+            "description": "General discussion of Heroicons.",
+            "unread": true
+          }
         ]
       },
       {
         "id": 4,
         "label": "Off topic",
         "channels": [
-          { "id": 11, "label": "design" },
-          { "id": 12, "label": "development" },
-          { "id": 13, "label": "random", "unread": true }
+          {
+            "id": 11,
+            "label": "design",
+            "description": "General discussion of web design."
+          },
+          {
+            "id": 12,
+            "label": "development",
+            "description": "General discussion of web development."
+          },
+          {
+            "id": 13,
+            "label": "random",
+            "description": "General discussion of everything else!",
+            "unread": true
+          }
         ]
       },
       {
         "id": 5,
         "label": "Community",
         "channels": [
-          { "id": 14, "label": "jobs" },
-          { "id": 15, "label": "showcase", "unread": true },
-          { "id": 16, "label": "bots" }
+          {
+            "id": 14,
+            "label": "jobs",
+            "description": "Job board. Please put [HIRING] or [FOR HIRE] at the beginning of your post."
+          },
+          {
+            "id": 15,
+            "label": "showcase",
+            "description": "Share your projects built with Tailwind CSS!",
+            "unread": true
+          },
+          { "id": 16, "label": "bots", "description": "Bot spam containment." }
         ]
       }
     ]

@@ -3,24 +3,35 @@
 import { notFound } from 'next/navigation';
 import Category from '~/components/Category';
 import * as Icons from '~/components/Icons';
-import { servers, fakeMessages } from '~/data';
-import data from '~/data/categories.json';
+import Message from '~/components/Message';
+import MessageWithUser from '~/components/MessageWithUser';
+import { data as servers } from '~/data/categories';
 import useCategories from '~/hooks/useCategories';
+import { TChannel } from '~/types';
 
 type Props = {
-  params: { serverId: string };
+  params: { serverId: string; channelId: string };
 };
 
 const ServerPage = ({ params }: Props) => {
-  const categories: Array<Category> = data[1].categories;
-
   const { closedCategories, toggleCategory } = useCategories();
 
   const serverId = parseInt(params.serverId);
   if (isNaN(serverId)) notFound();
 
-  const server = servers.find((s) => parseInt(s.id) === serverId);
-  if (!server) notFound();
+  const channelId = parseInt(params.channelId);
+  if (isNaN(channelId)) notFound();
+
+  const server = servers[serverId as keyof typeof servers];
+
+  const channel = server.categories
+    .map((c) => c.channels)
+    .flat()
+    .find((channel) => +channel.id === channelId) as TChannel;
+
+  if (!server || !channel) notFound();
+
+  const categories = server.categories;
 
   return (
     <>
@@ -30,7 +41,7 @@ const ServerPage = ({ params }: Props) => {
             <Icons.Verified className="absolute size-4 text-gray-550" />
             <Icons.Check className="absolute size-4" />
           </div>
-          {server.name}
+          {server.label}
           <Icons.ChevronDown className="ml-auto size-[18px] opacity-80" />
         </button>
 
@@ -45,13 +56,66 @@ const ServerPage = ({ params }: Props) => {
           ))}
         </div>
       </div>
-      <div className="flex flex-1 flex-col bg-gray-700">
-        <div className="flex h-12 items-center px-3 font-title shadow-sm">
-          General
+
+      <div className="flex min-w-0 flex-1 flex-shrink flex-col bg-gray-700">
+        <div className="flex h-12 items-center px-2 shadow-sm">
+          <div className="flex items-center">
+            <Icons.Hashtag className="mx-2 h-6 w-6 font-semibold text-gray-400" />
+            <span className="mr-2 whitespace-nowrap font-title text-white">
+              {channel.label}
+            </span>
+          </div>
+
+          {channel.description && (
+            <>
+              <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
+              <div className="mx-2 truncate text-sm font-medium text-gray-200">
+                {channel.description}
+              </div>
+            </>
+          )}
+
+          <div className="ml-auto flex items-center">
+            <button className="text-gray-200 hover:text-gray-100">
+              <Icons.HashtagWithSpeechBubble className="mx-2 h-6 w-6" />
+            </button>
+            <button className="text-gray-200 hover:text-gray-100">
+              <Icons.Bell className="mx-2 h-6 w-6" />
+            </button>
+            <button className="text-gray-200 hover:text-gray-100">
+              <Icons.Pin className="mx-2 h-6 w-6" />
+            </button>
+            <button className="text-gray-200 hover:text-gray-100">
+              <Icons.People className="mx-2 h-6 w-6" />
+            </button>
+            <div className="relative mx-2">
+              <input
+                type="text"
+                placeholder="Search"
+                className="h-6 w-36 rounded border-none bg-gray-900 px-1.5 text-sm font-medium placeholder-gray-400"
+              />
+              <div className="absolute inset-y-0 right-0 flex items-center">
+                <Icons.Spyglass className="mr-1.5 h-4 w-4 text-gray-400" />
+              </div>
+            </div>
+            <button className="text-gray-200 hover:text-gray-100">
+              <Icons.Inbox className="mx-2 h-6 w-6" />
+            </button>
+            <button className="text-gray-200 hover:text-gray-100">
+              <Icons.QuestionCircle className="mx-2 h-6 w-6" />
+            </button>
+          </div>
         </div>
-        <div className="scrollbar-fix flex-1 space-y-4 overflow-y-scroll px-3">
-          {fakeMessages.map((value, index) => (
-            <p key={index}>{`Message ${index + 1}: ${value}`}</p>
+
+        <div className="flex-1 overflow-y-scroll">
+          {channel.messages.map((message, i) => (
+            <div key={i}>
+              {i === 0 || message.user !== channel.messages[i - 1].user ? (
+                <MessageWithUser message={message} />
+              ) : (
+                <Message message={message} />
+              )}
+            </div>
           ))}
         </div>
       </div>

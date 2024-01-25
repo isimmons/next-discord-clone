@@ -1,5 +1,5 @@
 import ServerLinks from '~/components/ServerLinks';
-import { servers } from '~/data';
+import { data as servers } from '~/data/categories';
 
 type Props = {
   children: React.ReactNode;
