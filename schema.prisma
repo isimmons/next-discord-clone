@@ -18,8 +18,10 @@ model Server {
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
-  label String
+  id        Int      @id @default(autoincrement())
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
   server   Server? @relation(fields: [serverId], references: [id])
   serverId Int?
@@ -28,11 +30,13 @@ model Category {
 }
 
 model Channel {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   label       String
   description String
   icon        String
   message     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId Int?
