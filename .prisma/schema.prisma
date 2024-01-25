@@ -1,0 +1,39 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Server {
+  id        Int      @id @default(autoincrement())
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  categories Category[]
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  label String
+
+  server   Server? @relation(fields: [serverId], references: [id])
+  serverId Int?
+
+  channels Channel[]
+}
+
+model Channel {
+  id          Int    @id @default(autoincrement())
+  label       String
+  description String
+  icon        String
+  message     String
+
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+}
