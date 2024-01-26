@@ -1,13 +1,13 @@
 import { faker } from '@faker-js/faker';
 import { format } from 'date-fns';
 
-faker.seed(123);
+// faker.seed(123);
 
-const getRandomInt = (min: number, max: number) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-};
+// const getRandomInt = (min: number, max: number) => {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+// };
 
 function getMessages() {
   return [...Array(faker.number.int({ min: 7, max: 25 }))]

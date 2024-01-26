@@ -1,0 +1,65 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Server {
+  id        Int      @id @default(autoincrement())
+  label     String
+  img       String
+  slug      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  categories Category[]
+  channels   Channel[]
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  label     String
+  slug      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  server   Server? @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId Int?
+
+  channels Channel[]
+}
+
+model Channel {
+  id          Int      @id @default(autoincrement())
+  label       String
+  slug        String   @default("")
+  description String?
+  icon        String?
+  unread      Boolean?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int?
+
+  server   Server? @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId Int?
+
+  messages Message[]
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  user      String
+  avatarUrl String
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  channel   Channel? @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channelId Int?
+}
