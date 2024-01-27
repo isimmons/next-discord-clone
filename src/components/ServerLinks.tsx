@@ -4,15 +4,13 @@ import Image from 'next/image';
 import ServerLink from './ServerLink';
 import { Discord } from './Icons';
 import { useParams } from 'next/navigation';
-import { getServers, getChannels } from '~/app/actions';
+import { getServers } from '~/actions';
 import { useEffect, useState } from 'react';
 
 type Servers = Awaited<ReturnType<typeof getServers>>;
-type Channels = Awaited<ReturnType<typeof getChannels>>;
 
 const ServerLinks = () => {
   const [servers, setServers] = useState<Servers>([]);
-  const [channels, setChannels] = useState<Channels>([]);
 
   useEffect(() => {
     const loadServers = async () => {
@@ -23,25 +21,9 @@ const ServerLinks = () => {
     loadServers();
   }, []);
 
-  useEffect(() => {
-    const loadChannels = async () => {
-      const channelsRes = await getChannels(servers);
-      setChannels([...channelsRes]);
-    };
-
-    loadChannels();
-  }, [servers]);
-
   const { serverId } = useParams<{
     serverId: string;
   }>();
-
-  const getChannelSlug = (sid: number) => {
-    console.log(channels);
-    const slug = '';
-    console.log(slug);
-    return slug;
-  };
 
   return (
     <div className="scrollbar-fix space-y-2 overflow-y-scroll bg-gray-900 p-3 px-4">
@@ -52,14 +34,12 @@ const ServerLinks = () => {
 
       {servers &&
         servers.map((s) => {
-          let channelSlug = getChannelSlug(s.id) || '';
-          // if (s.categories[0].channels[0])
-          //   channelSlug = s.categories[0].channels[0].slug;
-
+          // let channelSlug: string = '1';
+          // if (s.channels[0]) channelSlug = s.channels[0].slug;
           return (
             <ServerLink
               key={s.id}
-              href={`/servers/${s.slug}/channels/${channelSlug}`}
+              href={`/servers/${s.slug}/channels/${s.channels[0].slug}`}
               active={s.id === parseInt(serverId)}
             >
               <Image
