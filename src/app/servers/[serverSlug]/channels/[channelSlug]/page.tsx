@@ -1,37 +1,37 @@
 'use client';
 
 import { notFound } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getServerBySlug } from '~/actions';
 import Category from '~/components/Category';
 import * as Icons from '~/components/Icons';
 import Message from '~/components/Message';
 import MessageWithUser from '~/components/MessageWithUser';
-import { data as servers } from '~/data/categories';
 import useCategories from '~/hooks/useCategories';
-import { TChannel } from '~/types';
 
 type Props = {
-  params: { serverId: string; channelId: string };
+  params: { serverSlug: string; channelSlug: string };
 };
 
+type GetServerBySlug = Awaited<ReturnType<typeof getServerBySlug>>;
+
 const ServerPage = ({ params }: Props) => {
+  const [server, setServer] = useState<GetServerBySlug>(null);
   const { closedCategories, toggleCategory } = useCategories();
 
-  const serverId = parseInt(params.serverId);
-  if (isNaN(serverId)) notFound();
+  const { serverSlug, channelSlug } = params;
+  if (!serverSlug || !channelSlug) notFound();
 
-  const channelId = parseInt(params.channelId);
-  if (isNaN(channelId)) notFound();
+  useEffect(() => {
+    const loadServer = async () => {
+      const server = await getServerBySlug(serverSlug, {
+        with: ['channels', 'categories'],
+      });
+      if (server) setServer(server);
+    };
 
-  const server = servers[serverId as keyof typeof servers];
-
-  const channel = server.categories
-    .map((c) => c.channels)
-    .flat()
-    .find((channel) => +channel.id === channelId) as TChannel;
-
-  if (!server || !channel) notFound();
-
-  const categories = server.categories;
+    loadServer();
+  }, [serverSlug]);
 
   return (
     <>
