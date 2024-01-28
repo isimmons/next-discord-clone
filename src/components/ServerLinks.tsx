@@ -32,25 +32,22 @@ const ServerLinks = () => {
       </ServerLink>
       <hr className="mx-2 rounded border-t-2 border-t-white/[.06]" />
 
-      {servers &&
-        servers.map((s) => {
-          // let channelSlug: string = '1';
-          // if (s.channels[0]) channelSlug = s.channels[0].slug;
-          return (
-            <ServerLink
-              key={s.id}
-              href={`/servers/${s.slug}/channels/${s.channels[0].slug}`}
-              active={s.id === parseInt(serverId)}
-            >
-              <Image
-                src={`/images/server-icons/${s.img}`}
-                alt={s.label}
-                width={72}
-                height={72}
-              />
-            </ServerLink>
-          );
-        })}
+      {servers?.map((s) => {
+        return (
+          <ServerLink
+            key={s.id}
+            href={`/servers/${s.slug}/channels/${s.channels[0].slug}`}
+            active={s.id === parseInt(serverId)}
+          >
+            <Image
+              src={`/images/server-icons/${s.img}`}
+              alt={s.label}
+              width={72}
+              height={72}
+            />
+          </ServerLink>
+        );
+      })}
     </div>
   );
 };
