@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { type Message } from '@prisma/client';
+import Image from 'next/image';
 
 type Props = {
   message: Message;

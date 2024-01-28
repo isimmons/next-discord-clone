@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { type MouseEventHandler, useState } from 'react';
+import { useState, type MouseEventHandler } from 'react';
 
 const useCategories = () => {
   const searchParams = useSearchParams();

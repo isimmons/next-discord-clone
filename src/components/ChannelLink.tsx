@@ -1,9 +1,9 @@
 'use client';
 
+import { type Channel } from '@prisma/client';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import * as Icons from '~/components/Icons';
-import { type Channel } from '@prisma/client';
 
 type Props = {
   channel: Channel;

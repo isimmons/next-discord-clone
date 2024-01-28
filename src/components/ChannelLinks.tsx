@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import ChannelLink from './ChannelLink';
-import { getChannelsByCategoryId } from '~/actions';
 import { type Category } from '@prisma/client';
+import { useEffect, useState } from 'react';
+import { getChannelsByCategoryId } from '~/actions';
+import ChannelLink from './ChannelLink';
 
 type Props = {
   category: Category;

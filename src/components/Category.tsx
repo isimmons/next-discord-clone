@@ -1,5 +1,5 @@
-import { type MouseEventHandler } from 'react';
 import { type Category } from '@prisma/client';
+import { type MouseEventHandler } from 'react';
 import ChannelLinks from './ChannelLinks';
 import { ChevronDownSmall } from './Icons';
 

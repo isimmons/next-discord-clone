@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import { type Metadata } from 'next';
 import favicon from '~/assets/favicon.png';
-import Document from './Document';
 import '~/assets/styles/globals.css';
+import Document from './Document';
 
 export const metadata: Metadata = {
   title: 'Create Next App',

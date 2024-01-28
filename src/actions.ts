@@ -41,17 +41,3 @@ export const getChannelsByCategoryId = async (cid: number) => {
     where: { categoryId: { equals: cid } },
   });
 };
-
-export const getServerBySlugWithCategories = async (serverSlug: string) => {
-  return await prisma.server.findFirst({
-    where: { slug: { equals: serverSlug } },
-    include: { categories: true },
-  });
-};
-
-export const getServerBySlugWithChannels = async (serverSlug: string) => {
-  return await prisma.server.findFirst({
-    where: { slug: { equals: serverSlug } },
-    include: { channels: true },
-  });
-};

@@ -14,11 +14,9 @@ type Props = {
 };
 
 type GetServerBySlug = Awaited<ReturnType<typeof getServerBySlug>>;
-// type GetChannelBySlug = Awaited<ReturnType<typeof getChannelBySlug>>;
 
 const ServerPage = ({ params }: Props) => {
   const [server, setServer] = useState<GetServerBySlug>(null);
-  // const [channel, setChannel] = useState<GetChannelBySlug>(null);
   const { closedCategories, toggleCategory } = useCategories();
 
   const { serverSlug, channelSlug } = params;

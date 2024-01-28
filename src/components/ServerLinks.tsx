@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import ServerLink from './ServerLink';
-import { Discord } from './Icons';
 import { useParams } from 'next/navigation';
-import { getServers } from '~/actions';
 import { useEffect, useState } from 'react';
+import { getServers } from '~/actions';
+import { Discord } from './Icons';
+import ServerLink from './ServerLink';
 
 type Servers = Awaited<ReturnType<typeof getServers>>;
 
