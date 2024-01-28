@@ -58,6 +58,7 @@ const seed = async () => {
   console.time('Creating messages...');
   const channelIds = await getAllChannelIds();
   channelIds.forEach(async (cid) => {
+    console.log(cid.id);
     await prisma.message
       .createMany({
         data: createMessages(cid.id),

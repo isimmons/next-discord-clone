@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import * as Icons from '~/components/Icons';
-import { type TChannel } from '~/types';
+import { type Channel } from '@prisma/client';
 
 type Props = {
-  channel: TChannel;
+  channel: Channel;
   closedCategories: number[];
 };
 
@@ -16,9 +16,9 @@ const ChannelLink = ({ channel, closedCategories }: Props) => {
       ? encodeURIComponent(JSON.stringify({ cc: closedCategories }))
       : null;
 
-  const params = useParams<{ channelId: string; serverId: string }>();
-  const cid = channel.id.toString();
-  const isActive = cid === params.channelId;
+  const params = useParams<{ channelSlug: string; serverSlug: string }>();
+
+  const isActive = channel.slug === params.channelSlug;
   const activeState = isActive
     ? 'active'
     : channel.unread
@@ -38,7 +38,7 @@ const ChannelLink = ({ channel, closedCategories }: Props) => {
     : Icons.Hashtag;
   return (
     <Link
-      href={`/servers/${params.serverId}/channels/${cid}/?cc=${closedCatQueryString || ''}`}
+      href={`/servers/${params.serverSlug}/channels/${channel.slug}${closedCatQueryString ? `/?cc=${closedCatQueryString}` : ''}`}
       className={`${classNames[activeState]} group relative mx-2 flex items-center rounded px-2 py-1`}
     >
       {activeState === 'inactiveUnread' && (

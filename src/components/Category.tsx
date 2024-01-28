@@ -1,10 +1,10 @@
 import { type MouseEventHandler } from 'react';
-import { type TCategory } from '~/types';
+import { type Category } from '@prisma/client';
 import ChannelLinks from './ChannelLinks';
 import { ChevronDownSmall } from './Icons';
 
 type Props = {
-  category: TCategory;
+  category: Category;
   closedCategories: Array<number>;
   toggleCategory: (categoryId: number) => MouseEventHandler<HTMLButtonElement>;
 };

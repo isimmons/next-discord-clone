@@ -1,9 +1,8 @@
 import Image from 'next/image';
-
-import { TMessage } from '~/types';
+import { type Message } from '@prisma/client';
 
 type Props = {
-  message: TMessage;
+  message: Message;
 };
 
 const MessageWithUser = ({ message }: Props) => {
@@ -22,7 +21,7 @@ const MessageWithUser = ({ message }: Props) => {
             {message.user}
           </span>
           <span className="text-xs font-medium text-gray-400">
-            {message.date}
+            {message.createdAt.toLocaleDateString()}
           </span>
         </p>
         <p className="text-gray-100">{message.text}</p>

@@ -1,5 +1,5 @@
 'use server';
-import { Category, Channel, Server } from '@prisma/client';
+
 import prisma from '~/db';
 
 export const getServers = async () => {
@@ -20,54 +20,38 @@ export const getServers = async () => {
   }
 };
 
-type ServerBySlugOptions =
-  | {
-      with: 'categories' | 'channels';
-    }
-  | {
-      with: Array<'categories' | 'channels'>;
-    };
-
-type ServerBySlugReturn = Promise<
-  | ({
-      channels: Array<Channel>;
-    } & Server)
-  | ({ categories: Array<Category> } & Server)
-  | ({ channels: Array<Channel>; categories: Array<Category> } & Server)
-  | Server
-  | never[]
->;
-
 export const getServerBySlug = async (
   serverSlug: string,
-  options?: ServerBySlugOptions,
-): Promise<ServerBySlugReturn> => {
-  if (options && options.with === 'channels') {
-    return (
-      (await prisma.server.findFirst({
-        where: { slug: { equals: serverSlug } },
-        include: { channels: true },
-      })) || []
-    );
-  } else if (options && options.with === 'categories') {
-    return (
-      (await prisma.server.findFirst({
-        where: { slug: { equals: serverSlug } },
-        include: { categories: true },
-      })) || []
-    );
-  } else if (options && Array.isArray(options?.with)) {
-    return (
-      (await prisma.server.findFirst({
-        where: { slug: { equals: serverSlug } },
-        include: { channels: true, categories: true },
-      })) || []
-    );
-  } else {
-    return (
-      (await prisma.server.findFirst({
-        where: { slug: { equals: serverSlug } },
-      })) || []
-    );
-  }
+  channelSlug: string,
+) => {
+  return await prisma.server.findFirst({
+    where: { slug: { equals: serverSlug } },
+    include: {
+      categories: true,
+      channels: {
+        where: { slug: { equals: channelSlug } },
+        include: { messages: true },
+      },
+    },
+  });
+};
+
+export const getChannelsByCategoryId = async (cid: number) => {
+  return prisma.channel.findMany({
+    where: { categoryId: { equals: cid } },
+  });
+};
+
+export const getServerBySlugWithCategories = async (serverSlug: string) => {
+  return await prisma.server.findFirst({
+    where: { slug: { equals: serverSlug } },
+    include: { categories: true },
+  });
+};
+
+export const getServerBySlugWithChannels = async (serverSlug: string) => {
+  return await prisma.server.findFirst({
+    where: { slug: { equals: serverSlug } },
+    include: { channels: true },
+  });
 };

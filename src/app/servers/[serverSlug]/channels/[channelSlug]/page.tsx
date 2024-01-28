@@ -14,9 +14,11 @@ type Props = {
 };
 
 type GetServerBySlug = Awaited<ReturnType<typeof getServerBySlug>>;
+// type GetChannelBySlug = Awaited<ReturnType<typeof getChannelBySlug>>;
 
 const ServerPage = ({ params }: Props) => {
   const [server, setServer] = useState<GetServerBySlug>(null);
+  // const [channel, setChannel] = useState<GetChannelBySlug>(null);
   const { closedCategories, toggleCategory } = useCategories();
 
   const { serverSlug, channelSlug } = params;
@@ -24,15 +26,15 @@ const ServerPage = ({ params }: Props) => {
 
   useEffect(() => {
     const loadServer = async () => {
-      const server = await getServerBySlug(serverSlug, {
-        with: ['channels', 'categories'],
-      });
+      const server = await getServerBySlug(serverSlug, channelSlug);
       if (server) setServer(server);
     };
 
     loadServer();
-  }, [serverSlug]);
-
+  }, [serverSlug, channelSlug]);
+  const categories = server?.categories;
+  const channel = server?.channels[0];
+  const messages = channel?.messages;
   return (
     <>
       <div className="flex w-60 flex-col bg-gray-800">
@@ -41,12 +43,12 @@ const ServerPage = ({ params }: Props) => {
             <Icons.Verified className="absolute size-4 text-gray-550" />
             <Icons.Check className="absolute size-4" />
           </div>
-          {server.label}
+          {server?.label}
           <Icons.ChevronDown className="ml-auto size-[18px] opacity-80" />
         </button>
 
         <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
-          {categories.map((category) => (
+          {categories?.map((category: any) => (
             <Category
               key={category.id}
               category={category}
@@ -62,18 +64,18 @@ const ServerPage = ({ params }: Props) => {
           <div className="flex items-center">
             <Icons.Hashtag className="mx-2 h-6 w-6 font-semibold text-gray-400" />
             <span className="mr-2 whitespace-nowrap font-title text-white">
-              {channel.label}
+              {server?.channels[0].label}
             </span>
           </div>
 
-          {channel.description && (
+          {
             <>
               <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
               <div className="mx-2 truncate text-sm font-medium text-gray-200">
-                {channel.description}
+                {channel?.description}
               </div>
             </>
-          )}
+          }
 
           <div className="ml-auto flex items-center">
             <button className="text-gray-200 hover:text-gray-100">
@@ -108,9 +110,9 @@ const ServerPage = ({ params }: Props) => {
         </div>
 
         <div className="flex-1 overflow-y-scroll">
-          {channel.messages.map((message, i) => (
+          {messages?.map((message, i) => (
             <div key={i}>
-              {i === 0 || message.user !== channel.messages[i - 1].user ? (
+              {i === 0 || message.user !== channel?.messages[i - 1].user ? (
                 <MessageWithUser message={message} />
               ) : (
                 <Message message={message} />

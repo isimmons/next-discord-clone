@@ -1,15 +1,29 @@
+import { useEffect, useState } from 'react';
 import ChannelLink from './ChannelLink';
-import { TCategory } from '~/types';
+import { getChannelsByCategoryId } from '~/actions';
+import { type Category } from '@prisma/client';
 
 type Props = {
-  category: TCategory;
+  category: Category;
   closedCategories: Array<number>;
 };
 
+type ChannelsByCategoryId = Awaited<ReturnType<typeof getChannelsByCategoryId>>;
+
 const ChannelLinks = ({ category, closedCategories }: Props) => {
+  const [channels, setChannels] = useState<ChannelsByCategoryId>([]);
+  useEffect(() => {
+    const loadChannels = async () => {
+      const channels = await getChannelsByCategoryId(category.id);
+      setChannels(channels);
+    };
+
+    loadChannels();
+  }, [category.id]);
+
   return (
     <div className="mt-[5px] space-y-0.5">
-      {category.channels
+      {channels
         .filter(
           (channel) =>
             !closedCategories.includes(category.id) || channel.unread,

@@ -70,13 +70,8 @@ export const createCategories = async () => {
   return [
     // tailwind categories
     {
-      label: 'Default Categories Welcome',
-      slug: 'default-categories-welcome',
-      serverId: await getServerId('tailwind-css'),
-    },
-    {
-      label: 'Default Categories announcements',
-      slug: 'default-categories-announcements',
+      label: 'Default Categories',
+      slug: 'tailwind-css-default-categories',
       serverId: await getServerId('tailwind-css'),
     },
     {
@@ -101,15 +96,11 @@ export const createCategories = async () => {
     },
     // nextjs categories
     {
-      label: 'Default Categories Welcome',
-      slug: 'default-categories-welcome',
+      label: 'Default Categories',
+      slug: 'next-js-default-categories',
       serverId: await getServerId('next-js'),
     },
-    {
-      label: 'Default Categories announcements',
-      slug: 'default-categories-announcements',
-      serverId: await getServerId('next-js'),
-    },
+
     {
       label: 'Need Help',
       slug: 'need-help',
@@ -122,13 +113,8 @@ export const createCategories = async () => {
     },
     // miragejs categories
     {
-      label: 'Default Categories Welcome',
-      slug: 'default-categories-welcome',
-      serverId: await getServerId('mirage-js'),
-    },
-    {
-      label: 'Default Categories announcements',
-      slug: 'default-categories-announcements',
+      label: 'Default Categories',
+      slug: 'mirage-js-default-categories',
       serverId: await getServerId('mirage-js'),
     },
     {
@@ -148,7 +134,7 @@ export const createChannels = async () => {
       description: 'Introduction to the Tailwind CSS framework and community.',
       icon: 'Book',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('default-categories-welcome'),
+      categoryId: await getCategoryId('tailwind-css-default-categories'),
     },
     {
       label: 'announcements',
@@ -156,7 +142,7 @@ export const createChannels = async () => {
       description: 'announcements about Tailwindcss.',
       icon: 'Speakerphone',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('default-categories-announcements'),
+      categoryId: await getCategoryId('tailwind-css-default-categories'),
     },
     {
       label: 'general',
@@ -273,7 +259,7 @@ export const createChannels = async () => {
       description: 'Welcome to the Next.js Discord.',
       icon: 'Book',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('default-categories-welcome'),
+      categoryId: await getCategoryId('next-js-default-categories'),
     },
     {
       label: 'announcements',
@@ -281,7 +267,7 @@ export const createChannels = async () => {
       description: 'Announcements related to this Discord server and Next.js',
       icon: 'Speakerphone',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('default-categories-announcements'),
+      categoryId: await getCategoryId('next-js-default-categories'),
     },
     {
       label: 'introductions',
@@ -289,7 +275,7 @@ export const createChannels = async () => {
       unread: true,
       description: 'Welcome to the server! Feel free to introduce yourself',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('default-categories'),
+      categoryId: await getCategoryId('next-js-default-categories'),
     },
     {
       label: 'community-help',
@@ -362,7 +348,7 @@ export const createChannels = async () => {
       description: 'Welcome to the Mirage JS Discord',
       icon: 'Book',
       serverId: await getServerId('mirage-js'),
-      categoryId: await getCategoryId('default-categories-welcome'),
+      categoryId: await getCategoryId('mirage-js-default-categories'),
     },
     {
       label: 'announcements',
@@ -370,7 +356,7 @@ export const createChannels = async () => {
       description: 'Announcements about new and upcomming Mirage events.',
       icon: 'Speakerphone',
       serverId: await getServerId('mirage-js'),
-      categoryId: await getCategoryId('default-categories-announcements'),
+      categoryId: await getCategoryId('mirage-js-default-categories'),
     },
     {
       label: 'general',

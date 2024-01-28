@@ -1,7 +1,7 @@
-import { TMessage } from '~/types';
+import { type Message } from '@prisma/client';
 
 type Props = {
-  message: TMessage;
+  message: Message;
 };
 
 const Message = ({ message }: Props) => {
