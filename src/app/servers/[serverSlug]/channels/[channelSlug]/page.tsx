@@ -30,6 +30,7 @@ const ServerPage = ({ params }: Props) => {
 
     loadServer();
   }, [serverSlug, channelSlug]);
+
   const categories = server?.categories;
   const channel = server?.channels[0];
   const messages = channel?.messages;
@@ -46,7 +47,7 @@ const ServerPage = ({ params }: Props) => {
         </button>
 
         <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
-          {categories?.map((category: any) => (
+          {categories?.map((category) => (
             <Category
               key={category.id}
               category={category}
@@ -66,14 +67,10 @@ const ServerPage = ({ params }: Props) => {
             </span>
           </div>
 
-          {
-            <>
-              <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
-              <div className="mx-2 truncate text-sm font-medium text-gray-200">
-                {channel?.description}
-              </div>
-            </>
-          }
+          <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
+          <div className="mx-2 truncate text-sm font-medium text-gray-200">
+            {channel?.description}
+          </div>
 
           <div className="ml-auto flex items-center">
             <button className="text-gray-200 hover:text-gray-100">
