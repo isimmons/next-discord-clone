@@ -2,7 +2,7 @@
 
 import { notFound } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { getServerBySlug } from '~/actions';
+import { getServerBySlug, getCategoriesByServerId } from '~/actions';
 import Category from '~/components/Category';
 import * as Icons from '~/components/Icons';
 import Message from '~/components/Message';
@@ -14,9 +14,13 @@ type Props = {
 };
 
 type GetServerBySlug = Awaited<ReturnType<typeof getServerBySlug>>;
+type GetCategoriesByServerID = Awaited<
+  ReturnType<typeof getCategoriesByServerId>
+>;
 
 const ServerPage = ({ params }: Props) => {
   const [server, setServer] = useState<GetServerBySlug>(null);
+  const [categories, setCategories] = useState<GetCategoriesByServerID>([]);
   const { closedCategories, toggleCategory } = useCategories();
 
   const { serverSlug, channelSlug } = params;
@@ -27,11 +31,21 @@ const ServerPage = ({ params }: Props) => {
       const server = await getServerBySlug(serverSlug, channelSlug);
       if (server) setServer(server);
     };
-
+    /* need to separate channel so this has no dependency on channelSlug
+      This should stop the rerender of child every time the channelSlug in the url changes */
     loadServer();
   }, [serverSlug, channelSlug]);
 
-  const categories = server?.categories;
+  useEffect(() => {
+    const loadCategories = async () => {
+      const categories = await getCategoriesByServerId(server?.id);
+      if (categories) setCategories(categories);
+    };
+
+    loadCategories();
+  }, [server?.id]);
+
+  // const categories = server?.categories;
   const channel = server?.channels[0];
   const messages = channel?.messages;
   return (

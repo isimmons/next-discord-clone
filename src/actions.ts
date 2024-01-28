@@ -41,3 +41,9 @@ export const getChannelsByCategoryId = async (cid: number) => {
     where: { categoryId: { equals: cid } },
   });
 };
+
+export const getCategoriesByServerId = async (sid: number | undefined) => {
+  return prisma.category.findMany({
+    where: { serverId: { equals: sid } },
+  });
+};

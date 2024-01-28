@@ -1,7 +1,9 @@
-import { type Category } from '@prisma/client';
-import { type MouseEventHandler } from 'react';
+import { type Category, type Server } from '@prisma/client';
+// import { type MouseEventHandler } from 'react';
 import ChannelLinks from './ChannelLinks';
 import { ChevronDownSmall } from './Icons';
+import useCategories from '~/hooks/useCategories';
+import { type MouseEventHandler } from 'react';
 
 type Props = {
   category: Category;
@@ -9,7 +11,9 @@ type Props = {
   toggleCategory: (categoryId: number) => MouseEventHandler<HTMLButtonElement>;
 };
 
-const Category = ({ category, closedCategories, toggleCategory }: Props) => {
+const Category = ({ category }: Props) => {
+  const { closedCategories, toggleCategory } = useCategories();
+
   return (
     <div key={category.id}>
       {category.label && (
