@@ -1,43 +1,27 @@
-'use client';
-
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { getServers } from '~/actions';
 import { Discord } from './Icons';
 import ServerLink from './ServerLink';
+import { type ServersWithWelcome } from '~/app/Document';
 
-type Servers = Awaited<ReturnType<typeof getServers>>;
+type Props = {
+  servers: ServersWithWelcome;
+};
 
-const ServerLinks = () => {
-  const [servers, setServers] = useState<Servers>([]);
-
-  useEffect(() => {
-    const loadServers = async () => {
-      const serversRes = await getServers();
-      if (serversRes) setServers([...serversRes]);
-    };
-
-    loadServers();
-  }, []);
-
-  const { serverId } = useParams<{
-    serverId: string;
-  }>();
-
+const ServerLinks = ({ servers }: Props) => {
   return (
     <div className="scrollbar-fix space-y-2 overflow-y-scroll bg-gray-900 p-3 px-4">
-      <ServerLink href="/">
+      <ServerLink to="/">
         <Discord className="h-5 w-7" />
       </ServerLink>
       <hr className="mx-2 rounded border-t-2 border-t-white/[.06]" />
 
-      {servers?.map((s) => {
+      {servers?.map(async (s) => {
+        if (!s) return null;
         return (
           <ServerLink
             key={s.id}
-            href={`/servers/${s.slug}/channels/${s.channels[0].slug}`}
-            active={s.id === parseInt(serverId)}
+            to={`/servers/${s.slug}/channels/${s.channel.slug}`}
+            sid={s.id}
           >
             <Image
               src={`/images/server-icons/${s.img}`}

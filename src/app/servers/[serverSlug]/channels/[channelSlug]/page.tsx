@@ -2,7 +2,11 @@
 
 import { notFound } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { getServerBySlug, getCategoriesByServerId } from '~/actions';
+import {
+  getServerBySlug,
+  getCategoriesByServerId,
+  getChannelBySlugByServerId,
+} from '~/actions';
 import Category from '~/components/Category';
 import * as Icons from '~/components/Icons';
 import Message from '~/components/Message';
@@ -17,37 +21,51 @@ type GetServerBySlug = Awaited<ReturnType<typeof getServerBySlug>>;
 type GetCategoriesByServerID = Awaited<
   ReturnType<typeof getCategoriesByServerId>
 >;
+type GetChannelBySlugByServerId = Awaited<
+  ReturnType<typeof getChannelBySlugByServerId>
+>;
 
 const ServerPage = ({ params }: Props) => {
   const [server, setServer] = useState<GetServerBySlug>(null);
   const [categories, setCategories] = useState<GetCategoriesByServerID>([]);
+  const [channel, setChannel] = useState<GetChannelBySlugByServerId>(null);
   const { closedCategories, toggleCategory } = useCategories();
 
   const { serverSlug, channelSlug } = params;
   if (!serverSlug || !channelSlug) notFound();
 
   useEffect(() => {
+    console.log('Reloading Server...');
     const loadServer = async () => {
-      const server = await getServerBySlug(serverSlug, channelSlug);
+      const server = await getServerBySlug(serverSlug);
       if (server) setServer(server);
     };
-    /* need to separate channel so this has no dependency on channelSlug
-      This should stop the rerender of child every time the channelSlug in the url changes */
+
     loadServer();
-  }, [serverSlug, channelSlug]);
+  }, [serverSlug]);
 
   useEffect(() => {
+    console.log('Reloading categories...');
     const loadCategories = async () => {
       const categories = await getCategoriesByServerId(server?.id);
       if (categories) setCategories(categories);
     };
 
     loadCategories();
-  }, [server?.id]);
+  }, [server]);
+
+  useEffect(() => {
+    const loadChannel = async () => {
+      const channel = await getChannelBySlugByServerId(channelSlug, server?.id);
+      if (channel) setChannel(channel);
+    };
+
+    loadChannel();
+  }, [server, channelSlug]);
 
   // const categories = server?.categories;
-  const channel = server?.channels[0];
-  const messages = channel?.messages;
+  // const channel = server?.channels[0];
+  // const messages = channel?.messages;
   return (
     <>
       <div className="flex w-60 flex-col bg-gray-800">
@@ -77,7 +95,7 @@ const ServerPage = ({ params }: Props) => {
           <div className="flex items-center">
             <Icons.Hashtag className="mx-2 h-6 w-6 font-semibold text-gray-400" />
             <span className="mr-2 whitespace-nowrap font-title text-white">
-              {server?.channels[0].label}
+              {channel?.label}
             </span>
           </div>
 
@@ -118,8 +136,8 @@ const ServerPage = ({ params }: Props) => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-scroll">
-          {messages?.map((message, i) => (
+        {/* <div className="flex-1 overflow-y-scroll">
+          {channel?.messages.map((message, i) => (
             <div key={i}>
               {i === 0 || message.user !== channel?.messages[i - 1].user ? (
                 <MessageWithUser message={message} />
@@ -128,7 +146,7 @@ const ServerPage = ({ params }: Props) => {
               )}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   );

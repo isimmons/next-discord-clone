@@ -1,21 +1,24 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 interface Props {
-  href: string;
+  to: string;
   children: React.ReactNode;
-  active?: boolean;
+  sid?: number;
 }
 
-const ServerLink = ({ href, children, active }: Props) => {
+const ServerLink = ({ to, children, sid }: Props) => {
+  const { serverId } = useParams<{
+    serverId: string;
+  }>();
   const pathname = usePathname();
-  const isActive = active || pathname === href;
+  const isActive = sid === parseInt(serverId) || pathname === to;
 
   return (
     <div className="block">
-      <Link href={href}>
+      <Link href={to}>
         <div className="group relative">
           <div className="absolute -left-3 flex h-full items-center">
             <div

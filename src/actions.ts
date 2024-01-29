@@ -20,19 +20,22 @@ export const getServers = async () => {
   }
 };
 
-export const getServerBySlug = async (
-  serverSlug: string,
-  channelSlug: string,
-) => {
+export const getServerBySlug = async (serverSlug: string) => {
   return await prisma.server.findFirst({
     where: { slug: { equals: serverSlug } },
     include: {
       categories: true,
-      channels: {
-        where: { slug: { equals: channelSlug } },
-        include: { messages: true },
-      },
     },
+  });
+};
+
+export const getChannelBySlugByServerId = async (
+  channelSlug: string,
+  sid: number | undefined,
+) => {
+  return await prisma.channel.findFirst({
+    where: { slug: { equals: channelSlug }, serverId: { equals: sid } },
+    include: { messages: true },
   });
 };
 

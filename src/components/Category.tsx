@@ -3,7 +3,7 @@ import { type Category, type Server } from '@prisma/client';
 import ChannelLinks from './ChannelLinks';
 import { ChevronDownSmall } from './Icons';
 import useCategories from '~/hooks/useCategories';
-import { type MouseEventHandler } from 'react';
+import { memo, type MouseEventHandler } from 'react';
 
 type Props = {
   category: Category;
@@ -33,4 +33,4 @@ const Category = ({ category }: Props) => {
   );
 };
 
-export default Category;
+export default memo(Category);
