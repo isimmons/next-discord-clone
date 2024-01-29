@@ -7,7 +7,6 @@ import {
   getCategoriesByServerId,
   getChannelBySlugByServerId,
 } from '~/actions';
-import Categories from '~/components/Categories';
 import Category from '~/components/Category';
 import * as Icons from '~/components/Icons';
 import Message from '~/components/Message';
@@ -19,18 +18,18 @@ type Props = {
 };
 
 type GetServerBySlug = Awaited<ReturnType<typeof getServerBySlug>>;
-// type GetCategoriesByServerID = Awaited<
-//   ReturnType<typeof getCategoriesByServerId>
-// >;
+type GetCategoriesByServerID = Awaited<
+  ReturnType<typeof getCategoriesByServerId>
+>;
 type GetChannelBySlugByServerId = Awaited<
   ReturnType<typeof getChannelBySlugByServerId>
 >;
 
 const ServerPage = ({ params }: Props) => {
   const [server, setServer] = useState<GetServerBySlug>(null);
-  // const [categories, setCategories] = useState<GetCategoriesByServerID>([]);
+  const [categories, setCategories] = useState<GetCategoriesByServerID>([]);
   const [channel, setChannel] = useState<GetChannelBySlugByServerId>(null);
-  // const { closedCategories, toggleCategory } = useCategories();
+  const { closedCategories, toggleCategory } = useCategories();
 
   const { serverSlug, channelSlug } = params;
   if (!serverSlug || !channelSlug) notFound();
@@ -45,15 +44,15 @@ const ServerPage = ({ params }: Props) => {
     loadServer();
   }, [serverSlug]);
 
-  // useEffect(() => {
-  //   console.log('Reloading categories...');
-  //   const loadCategories = async () => {
-  //     const categories = await getCategoriesByServerId(server?.id);
-  //     if (categories) setCategories(categories);
-  //   };
+  useEffect(() => {
+    console.log('Reloading categories...');
+    const loadCategories = async () => {
+      const categories = await getCategoriesByServerId(server?.id);
+      if (categories) setCategories(categories);
+    };
 
-  //   loadCategories();
-  // }, [server]);
+    loadCategories();
+  }, [server]);
 
   useEffect(() => {
     const loadChannel = async () => {
@@ -68,7 +67,25 @@ const ServerPage = ({ params }: Props) => {
     <>
       <div className="flex w-60 flex-col bg-gray-800">
         {/* categories section needs server data (label) */}
-        <Categories server={server} />
+        <button className="flex h-12 items-center px-4 font-title text-[15px] text-white shadow-sm transition hover:bg-gray-550/[0.16]">
+          <div className="relative mr-1 size-4">
+            <Icons.Verified className="absolute size-4 text-gray-550" />
+            <Icons.Check className="absolute size-4" />
+          </div>
+          {server?.label}
+          <Icons.ChevronDown className="ml-auto size-[18px] opacity-80" />
+        </button>
+
+        <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
+          {categories?.map((category) => (
+            <Category
+              key={category.id}
+              category={category}
+              closedCategories={closedCategories}
+              toggleCategory={toggleCategory}
+            />
+          ))}
+        </div>
         {/* end categories section */}
       </div>
 

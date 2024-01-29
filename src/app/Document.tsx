@@ -1,7 +1,5 @@
-import { Prisma } from '@prisma/client';
-import ServerLinks from '~/components/ServerLinks';
-
 import prisma from '~/db';
+import ServerLinks from '~/components/ServerLinks';
 
 const servers = await prisma.server.findMany({
   select: { id: true, label: true, slug: true, img: true, channels: true },
@@ -15,8 +13,6 @@ const serversWithWelcome = servers.map((s) => {
 });
 
 export type ServersWithWelcome = typeof serversWithWelcome;
-
-// console.log(serversWithWelcome);
 
 type Props = {
   children: React.ReactNode;
