@@ -1,5 +1,4 @@
-import { type Category, type Server } from '@prisma/client';
-// import { type MouseEventHandler } from 'react';
+import { type Category } from '@prisma/client';
 import ChannelLinks from './ChannelLinks';
 import { ChevronDownSmall } from './Icons';
 import useCategories from '~/hooks/useCategories';

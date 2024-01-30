@@ -50,3 +50,9 @@ export const getCategoriesByServerId = async (sid: number | undefined) => {
     where: { serverId: { equals: sid } },
   });
 };
+
+export const getMessagesByChannelId = async (cid: number | undefined) => {
+  return prisma.message.findMany({
+    where: { channelId: { equals: cid } },
+  });
+};

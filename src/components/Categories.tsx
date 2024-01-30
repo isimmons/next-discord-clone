@@ -1,20 +1,14 @@
 'use client';
 
-import { Category, Server } from '@prisma/client';
+import { type Server } from '@prisma/client';
 import Category from './Category';
 import * as Icons from '~/components/Icons';
 import { useEffect, useState } from 'react';
 import { getCategoriesByServerId } from '~/actions';
 import useCategories from '~/hooks/useCategories';
 
-type ServerWithCategories =
-  | ({
-      categories: Array<Category>;
-    } & Server)
-  | null;
-
 type Props = {
-  server: ServerWithCategories;
+  server: Server;
 };
 
 type GetCategoriesByServerID = Awaited<

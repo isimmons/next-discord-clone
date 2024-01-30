@@ -13,13 +13,15 @@ type ChannelsByCategoryId = Awaited<ReturnType<typeof getChannelsByCategoryId>>;
 const ChannelLinks = ({ category, closedCategories }: Props) => {
   const [channels, setChannels] = useState<ChannelsByCategoryId>([]);
   useEffect(() => {
+    console.log('Reloading channels...');
+
     const loadChannels = async () => {
       const channels = await getChannelsByCategoryId(category.id);
       setChannels(channels);
     };
 
     loadChannels();
-  }, [category.id]);
+  }, [category]);
 
   return (
     <div className="mt-[5px] space-y-0.5">
