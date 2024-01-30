@@ -20,9 +20,8 @@ const Categories = ({ server }: Props) => {
   const { closedCategories, toggleCategory } = useCategories();
 
   useEffect(() => {
-    console.log('Reloading categories...');
     const loadCategories = async () => {
-      const categories = await getCategoriesByServerId(server?.id);
+      const categories = await getCategoriesByServerId(server.id);
       if (categories) setCategories(categories);
     };
 
