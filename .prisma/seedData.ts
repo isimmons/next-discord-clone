@@ -39,10 +39,19 @@ export const getServerId = async (slug: string) => {
   return res?.id;
 };
 
-export const getCategoryId = async (slug: string) => {
+// categories made at this time. Need to get category.serverId too so we don't have duplicates
+// which results in missing records. Like no channels for next-js community category because
+// this function returned the first category matching the slug whish is the one for tailwind-css
+
+export const getCategoryId = async (
+  serverSlug: string,
+  categorySlug: string,
+) => {
+  const sid = await getServerId(serverSlug);
+
   const res = await prisma.category.findFirst({
     select: { id: true },
-    where: { slug },
+    where: { AND: { slug: categorySlug, serverId: { equals: sid } } },
   });
 
   return res?.id;
@@ -70,8 +79,8 @@ export const createCategories = async () => {
   return [
     // tailwind categories
     {
-      label: 'Default Categories',
-      slug: 'tailwind-css-default-categories',
+      label: 'Default Category',
+      slug: 'default-category',
       serverId: await getServerId('tailwind-css'),
     },
     {
@@ -96,8 +105,8 @@ export const createCategories = async () => {
     },
     // nextjs categories
     {
-      label: 'Default Categories',
-      slug: 'next-js-default-categories',
+      label: 'Default Category',
+      slug: 'default-category',
       serverId: await getServerId('next-js'),
     },
 
@@ -113,8 +122,8 @@ export const createCategories = async () => {
     },
     // miragejs categories
     {
-      label: 'Default Categories',
-      slug: 'mirage-js-default-categories',
+      label: 'Default Category',
+      slug: 'default-category',
       serverId: await getServerId('mirage-js'),
     },
     {
@@ -134,7 +143,7 @@ export const createChannels = async () => {
       description: 'Introduction to the Tailwind CSS framework and community.',
       icon: 'Book',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-css-default-categories'),
+      categoryId: await getCategoryId('tailwind-css', 'default-category'),
     },
     {
       label: 'announcements',
@@ -142,7 +151,7 @@ export const createChannels = async () => {
       description: 'announcements about Tailwindcss.',
       icon: 'Speakerphone',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-css-default-categories'),
+      categoryId: await getCategoryId('tailwind-css', 'default-category'),
     },
     {
       label: 'general',
@@ -151,7 +160,7 @@ export const createChannels = async () => {
         'General discussion of Tailwind CSS (please move off-topic discussion in the off-topic channels).',
       unread: true,
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-css'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-css'),
     },
     {
       label: 'plugins',
@@ -159,7 +168,7 @@ export const createChannels = async () => {
       description: 'Tailwind CSS plugins.',
       unread: true,
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-css'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-css'),
     },
     {
       label: 'help',
@@ -167,28 +176,28 @@ export const createChannels = async () => {
       description: 'Help with Tailwind CSS and build process integration.',
       unread: true,
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-css'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-css'),
     },
     {
       label: 'internals',
       slug: 'internals',
       description: 'Development of the Tailwind CSS framework itself.',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-css'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-css'),
     },
     {
       label: 'tailwind-ui',
       slug: 'tailwind-ui',
       description: 'General discussion of Tailwind UI.',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-labs'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-labs'),
     },
     {
       label: 'headless-ui',
       slug: 'headless-ui',
       description: 'General discussion of Headless UI.',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-labs'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-labs'),
     },
     {
       label: 'refactoring-ui',
@@ -196,7 +205,7 @@ export const createChannels = async () => {
       description: 'General discussion of Refactoring UI.',
       unread: true,
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-labs'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-labs'),
     },
     {
       label: 'heroicons',
@@ -204,21 +213,21 @@ export const createChannels = async () => {
       description: 'General discussion of Heroicons.',
       unread: true,
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('tailwind-labs'),
+      categoryId: await getCategoryId('tailwind-css', 'tailwind-labs'),
     },
     {
       label: 'design',
       slug: 'design',
       description: 'General discussion of web design.',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('off-topic'),
+      categoryId: await getCategoryId('tailwind-css', 'off-topic'),
     },
     {
       label: 'development',
       slug: 'development',
       description: 'General discussion of web development.',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('off-topic'),
+      categoryId: await getCategoryId('tailwind-css', 'off-topic'),
     },
     {
       label: 'random',
@@ -226,7 +235,7 @@ export const createChannels = async () => {
       description: 'General discussion of everything else!',
       unread: true,
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('off-topic'),
+      categoryId: await getCategoryId('tailwind-css', 'off-topic'),
     },
     {
       label: 'jobs',
@@ -234,7 +243,7 @@ export const createChannels = async () => {
       description:
         'Job board. Please put [HIRING] or [FOR HIRE] at the beginning of your post.',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('tailwind-css', 'community'),
     },
     {
       label: 'showcase',
@@ -242,14 +251,14 @@ export const createChannels = async () => {
       description: 'Share your projects built with Tailwind CSS!',
       unread: true,
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('tailwind-css', 'community'),
     },
     {
       label: 'bots',
       slug: 'bots',
       description: 'Bot spam containment.',
       serverId: await getServerId('tailwind-css'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('tailwind-css', 'community'),
     },
 
     // nextjs channels
@@ -259,7 +268,7 @@ export const createChannels = async () => {
       description: 'Welcome to the Next.js Discord.',
       icon: 'Book',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('next-js-default-categories'),
+      categoryId: await getCategoryId('next-js', 'default-category'),
     },
     {
       label: 'announcements',
@@ -267,7 +276,7 @@ export const createChannels = async () => {
       description: 'Announcements related to this Discord server and Next.js',
       icon: 'Speakerphone',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('next-js-default-categories'),
+      categoryId: await getCategoryId('next-js', 'default-category'),
     },
     {
       label: 'introductions',
@@ -275,7 +284,7 @@ export const createChannels = async () => {
       unread: true,
       description: 'Welcome to the server! Feel free to introduce yourself',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('next-js-default-categories'),
+      categoryId: await getCategoryId('next-js', 'default-category'),
     },
     {
       label: 'community-help',
@@ -283,7 +292,7 @@ export const createChannels = async () => {
       description:
         'Members of the community can help each other here, but we recommend checking GitHub discussions first: ',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('need-help'),
+      categoryId: await getCategoryId('next-js', 'need-help'),
     },
     {
       label: 'general',
@@ -291,7 +300,7 @@ export const createChannels = async () => {
       icon: 'HashtagWithSpeechBubble',
       description: 'Discussions about Next.js in general',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('next-js', 'community'),
     },
     {
       label: 'off-topic',
@@ -300,14 +309,14 @@ export const createChannels = async () => {
       description:
         'Discussions about topics not related to Next.js or other channels',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('next-js', 'community'),
     },
     {
       label: 'showcase',
       slug: 'showcase',
       unread: true,
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('next-js', 'community'),
     },
     {
       label: 'jobs-board',
@@ -315,7 +324,7 @@ export const createChannels = async () => {
       description:
         'Is your company looking for Next.js developers? Discuss here!',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('next-js', 'community'),
     },
     {
       label: 'hire-me',
@@ -323,7 +332,7 @@ export const createChannels = async () => {
       unread: true,
       description: 'Are you a developer looking to work with Next.js?',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('next-js', 'community'),
     },
     {
       label: 'makers',
@@ -331,14 +340,14 @@ export const createChannels = async () => {
       description:
         'Share as you build in public. Welcoming all makers and indie hackers.',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('next-js', 'community'),
     },
     {
       label: 'moderation-feedback',
       slug: 'moderation-feedback',
       description: 'Discussion about this Discord server and moderation topics',
       serverId: await getServerId('next-js'),
-      categoryId: await getCategoryId('community'),
+      categoryId: await getCategoryId('next-js', 'community'),
     },
 
     // mirage channels
@@ -348,7 +357,7 @@ export const createChannels = async () => {
       description: 'Welcome to the Mirage JS Discord',
       icon: 'Book',
       serverId: await getServerId('mirage-js'),
-      categoryId: await getCategoryId('mirage-js-default-categories'),
+      categoryId: await getCategoryId('mirage-js', 'default-category'),
     },
     {
       label: 'announcements',
@@ -356,27 +365,27 @@ export const createChannels = async () => {
       description: 'Announcements about new and upcomming Mirage events.',
       icon: 'Speakerphone',
       serverId: await getServerId('mirage-js'),
-      categoryId: await getCategoryId('mirage-js-default-categories'),
+      categoryId: await getCategoryId('mirage-js', 'default-category'),
     },
     {
       label: 'general',
       slug: 'general',
       serverId: await getServerId('mirage-js'),
-      categoryId: await getCategoryId('text-channels'),
+      categoryId: await getCategoryId('mirage-js', 'text-channels'),
     },
     {
       label: 'graphql',
       slug: 'graphql',
       unread: true,
       serverId: await getServerId('mirage-js'),
-      categoryId: await getCategoryId('text-channels'),
+      categoryId: await getCategoryId('mirage-js', 'text-channels'),
     },
     {
       label: 'typescript',
       slug: 'typescript',
       unread: true,
       serverId: await getServerId('mirage-js'),
-      categoryId: await getCategoryId('text-channels'),
+      categoryId: await getCategoryId('mirage-js', 'text-channels'),
     },
   ];
 };

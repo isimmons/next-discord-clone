@@ -1,6 +1,9 @@
-import { type Category } from '@prisma/client';
+import { Channel, type Category } from '@prisma/client';
 import { useEffect, useState } from 'react';
-import { getChannelsByCategoryId } from '~/actions';
+import {
+  getChannelsByCategoryId,
+  getChannelsByCategoryIdByServerId,
+} from '~/actions';
 import ChannelLink from './ChannelLink';
 
 type Props = {
@@ -9,34 +12,42 @@ type Props = {
 };
 
 type ChannelsByCategoryId = Awaited<ReturnType<typeof getChannelsByCategoryId>>;
+type ChannelsByCategoryIdByServerId = Awaited<
+  ReturnType<typeof getChannelsByCategoryIdByServerId>
+>;
 
 const ChannelLinks = ({ category, closedCategories }: Props) => {
-  const [channels, setChannels] = useState<ChannelsByCategoryId>([]);
+  const [channels, setChannels] = useState<ChannelsByCategoryIdByServerId>([]);
   useEffect(() => {
     console.log('Reloading channels...');
 
     const loadChannels = async () => {
-      const channels = await getChannelsByCategoryId(category.id);
-      setChannels(channels);
+      const channels = await getChannelsByCategoryIdByServerId(
+        category.id,
+        category.serverId,
+      );
+      if (channels) setChannels(channels);
     };
 
     loadChannels();
   }, [category]);
 
+  console.log('categoryId: ', category.id, 'channels: ', channels);
   return (
     <div className="mt-[5px] space-y-0.5">
-      {channels
-        .filter(
-          (channel) =>
-            !closedCategories.includes(category.id) || channel.unread,
-        )
-        .map((channel) => (
-          <ChannelLink
-            key={channel.id}
-            channel={channel}
-            closedCategories={closedCategories}
-          />
-        ))}
+      {channels &&
+        channels
+          .filter(
+            (channel) =>
+              !closedCategories.includes(category.id) || channel.unread,
+          )
+          .map((channel) => (
+            <ChannelLink
+              key={channel.id}
+              channel={channel}
+              closedCategories={closedCategories}
+            />
+          ))}
     </div>
   );
 };

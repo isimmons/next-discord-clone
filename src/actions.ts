@@ -45,6 +45,37 @@ export const getChannelsByCategoryId = async (cid: number) => {
   });
 };
 
+// export const getChannelsByCategoryIdByServerId = async (
+//   cid: number,
+//   sid: number | null,
+// ) => {
+//   try {
+//     return prisma.channel.findMany({
+//       where: { categoryId: { equals: cid }, serverId: { equals: sid } },
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+export const getChannelsByCategoryIdByServerId = async (
+  cid: number,
+  sid: number | null,
+) => {
+  try {
+    return prisma.channel.findMany({
+      where: {
+        AND: {
+          categoryId: { equals: cid },
+          serverId: { equals: sid },
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getCategoriesByServerId = async (sid: number | undefined) => {
   return prisma.category.findMany({
     where: { serverId: { equals: sid } },
@@ -52,6 +83,7 @@ export const getCategoriesByServerId = async (sid: number | undefined) => {
 };
 
 export const getMessagesByChannelId = async (cid: number | undefined) => {
+  console.log('loading categories... ');
   return prisma.message.findMany({
     where: { channelId: { equals: cid } },
   });
