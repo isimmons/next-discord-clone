@@ -4,16 +4,19 @@ import { type Channel } from '@prisma/client';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import * as Icons from '~/components/Icons';
+import useCategories from '~/hooks/useCategories';
 
 type Props = {
   channel: Channel;
-  closedCategories: number[];
+  closedCategories: Array<number>;
 };
 
 const ChannelLink = ({ channel, closedCategories }: Props) => {
+  // const { closedCategories } = useCategories();
+
   const closedCatQueryString =
     closedCategories.length > 0
-      ? encodeURIComponent(JSON.stringify({ cc: closedCategories }))
+      ? encodeURIComponent(JSON.stringify([...closedCategories]))
       : null;
 
   const params = useParams<{ channelSlug: string; serverSlug: string }>();
@@ -38,7 +41,7 @@ const ChannelLink = ({ channel, closedCategories }: Props) => {
     : Icons.Hashtag;
   return (
     <Link
-      href={`/servers/${params.serverSlug}/channels/${channel.slug}${closedCatQueryString ? `/?cc=${closedCatQueryString}` : ''}`}
+      href={`/servers/${params.serverSlug}/channels/${channel.slug}${closedCatQueryString ? `?cc=${closedCatQueryString}` : ''}`}
       className={`${classNames[activeState]} group relative mx-2 flex items-center rounded px-2 py-1`}
     >
       {activeState === 'inactiveUnread' && (

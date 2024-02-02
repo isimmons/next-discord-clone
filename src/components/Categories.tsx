@@ -1,55 +1,62 @@
 'use client';
 
-import { type Server } from '@prisma/client';
 import Category from './Category';
 import * as Icons from '~/components/Icons';
-import { useEffect, useState } from 'react';
-import { getCategoriesByServerId } from '~/actions';
+
+import CategoryFallback from './CategoryFallback';
+import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
+import { ServerWithCategoriesWithChannels } from '~/types';
 import useCategories from '~/hooks/useCategories';
 
+// type Props = {
+//   server:
+//     | ({
+//         categories: Array<CategoryType> & { channels: Array<Channel>};
+//       } & Server)
+//     | undefined;
+// };
+
 type Props = {
-  server: Server;
+  server: ServerWithCategoriesWithChannels;
 };
 
-type GetCategoriesByServerID = Awaited<
-  ReturnType<typeof getCategoriesByServerId>
->;
+/**
+ *  Well shit! I'm stupid. Try brining categories and closed catagories back here
+ * We don't need each individual category having it's own closedcategories array
+ * There should be one for the whole categories section combined with categories
+ */
 
 const Categories = ({ server }: Props) => {
-  const [categories, setCategories] = useState<GetCategoriesByServerID>([]);
-  const { closedCategories, toggleCategory } = useCategories();
+  const { closedCategories, openCategory, closeCategory } = useCategories();
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      const categories = await getCategoriesByServerId(server.id);
-      if (categories) setCategories(categories);
-    };
-
-    loadCategories();
-  }, [server]);
+  if (!server) notFound();
 
   return (
-    <div className="flex w-60 flex-col bg-gray-800">
-      <button className="flex h-12 items-center px-4 font-title text-[15px] text-white shadow-sm transition hover:bg-gray-550/[0.16]">
-        <div className="relative mr-1 size-4">
-          <Icons.Verified className="absolute size-4 text-gray-550" />
-          <Icons.Check className="absolute size-4" />
-        </div>
-        {server?.label}
-        <Icons.ChevronDown className="ml-auto size-[18px] opacity-80" />
-      </button>
+    <Suspense fallback={<CategoryFallback />}>
+      <div className="flex w-60 flex-col bg-gray-800">
+        <button className="flex h-12 items-center px-4 font-title text-[15px] text-white shadow-sm transition hover:bg-gray-550/[0.16]">
+          <div className="relative mr-1 size-4">
+            <Icons.Verified className="absolute size-4 text-gray-550" />
+            <Icons.Check className="absolute size-4" />
+          </div>
+          {server.label}
+          <Icons.ChevronDown className="ml-auto size-[18px] opacity-80" />
+        </button>
 
-      <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
-        {categories?.map((category) => (
-          <Category
-            key={category.id}
-            category={category}
-            closedCategories={closedCategories}
-            toggleCategory={toggleCategory}
-          />
-        ))}
+        <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
+          {server.categories.map((category) => (
+            <Category
+              key={category.id}
+              category={category}
+              closedCategories={closedCategories}
+              openCategory={openCategory}
+              closeCategory={closeCategory}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 

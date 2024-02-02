@@ -1,23 +1,33 @@
+'use client';
 import { type Category } from '@prisma/client';
 import ChannelLinks from './ChannelLinks';
 import { ChevronDownSmall } from './Icons';
-import useCategories from '~/hooks/useCategories';
-import { memo, type MouseEventHandler } from 'react';
+import { type CategoryWithChannels } from '~/types';
+import { type MouseEventHandler } from 'react';
 
 type Props = {
-  category: Category;
+  category: CategoryWithChannels;
   closedCategories: Array<number>;
-  toggleCategory: (categoryId: number) => MouseEventHandler<HTMLButtonElement>;
+  openCategory: (categoryId: number) => MouseEventHandler<HTMLButtonElement>;
+  closeCategory: (categoryId: number) => MouseEventHandler<HTMLButtonElement>;
 };
 
-const Category = ({ category }: Props) => {
-  const { closedCategories, toggleCategory } = useCategories();
-
+const Category = ({
+  category,
+  closedCategories,
+  openCategory,
+  closeCategory,
+}: Props) => {
+  // const { openCategory, closeCategory } = useCategories();
   return (
-    <div key={category.id}>
-      {category.label && (
+    <div>
+      {category && (
         <button
-          onClick={toggleCategory(category.id)}
+          onClick={
+            closedCategories.includes(category.id)
+              ? openCategory(category.id)
+              : closeCategory(category.id)
+          }
           className="flex w-full items-center px-0.5 font-title text-xs uppercase tracking-wide hover:text-gray-100"
         >
           <ChevronDownSmall
@@ -32,4 +42,4 @@ const Category = ({ category }: Props) => {
   );
 };
 
-export default memo(Category);
+export default Category;
