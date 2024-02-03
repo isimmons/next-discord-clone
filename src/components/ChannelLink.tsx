@@ -4,7 +4,6 @@ import { type Channel } from '@prisma/client';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import * as Icons from '~/components/Icons';
-import useCategories from '~/hooks/useCategories';
 
 type Props = {
   channel: Channel;
@@ -12,8 +11,6 @@ type Props = {
 };
 
 const ChannelLink = ({ channel, closedCategories }: Props) => {
-  // const { closedCategories } = useCategories();
-
   const closedCatQueryString =
     closedCategories.length > 0
       ? encodeURIComponent(JSON.stringify([...closedCategories]))

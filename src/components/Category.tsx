@@ -18,7 +18,6 @@ const Category = ({
   openCategory,
   closeCategory,
 }: Props) => {
-  // const { openCategory, closeCategory } = useCategories();
   return (
     <div>
       {category && (

@@ -1,4 +1,3 @@
-import useCategories from '~/hooks/useCategories';
 import ChannelLink from './ChannelLink';
 import { CategoryWithChannels } from '~/types';
 
@@ -8,8 +7,6 @@ type Props = {
 };
 
 const ChannelLinks = ({ category, closedCategories }: Props) => {
-  // const { closedCategories } = useCategories();
-
   return (
     <div className="mt-[5px] space-y-0.5">
       {category.channels

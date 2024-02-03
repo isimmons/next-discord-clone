@@ -9,14 +9,6 @@ import { notFound } from 'next/navigation';
 import { ServerWithCategoriesWithChannels } from '~/types';
 import useCategories from '~/hooks/useCategories';
 
-// type Props = {
-//   server:
-//     | ({
-//         categories: Array<CategoryType> & { channels: Array<Channel>};
-//       } & Server)
-//     | undefined;
-// };
-
 type Props = {
   server: ServerWithCategoriesWithChannels;
 };
@@ -25,10 +17,6 @@ const Categories = ({ server }: Props) => {
   const { closedCategories, openCategory, closeCategory } = useCategories();
 
   if (!server) notFound();
-
-  console.log('Categories Component: ', closedCategories);
-
-  // return <p>Testing</p>;
 
   return (
     <Suspense fallback={<CategoryFallback />}>
