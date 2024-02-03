@@ -21,16 +21,14 @@ type Props = {
   server: ServerWithCategoriesWithChannels;
 };
 
-/**
- *  Well shit! I'm stupid. Try brining categories and closed catagories back here
- * We don't need each individual category having it's own closedcategories array
- * There should be one for the whole categories section combined with categories
- */
-
 const Categories = ({ server }: Props) => {
   const { closedCategories, openCategory, closeCategory } = useCategories();
 
   if (!server) notFound();
+
+  console.log('Categories Component: ', closedCategories);
+
+  // return <p>Testing</p>;
 
   return (
     <Suspense fallback={<CategoryFallback />}>
