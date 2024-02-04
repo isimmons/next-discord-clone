@@ -9,6 +9,10 @@
     --scrollbar-thumb-hover: rgba(30, 41, 59, 0.75);
     --scrollbar-track-hover: rgba(100, 116, 139, 0.5);
   }
+
+  svg {
+    @apply fill-current;
+  }
 }
 
 /* hide scrollbar (not good idea for UI)*/
@@ -90,8 +94,4 @@
   src: url('/fonts/ginto/ginto-semibold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
-}
-
-svg {
-  @apply fill-current;
 }

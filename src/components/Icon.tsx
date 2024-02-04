@@ -1,11 +1,11 @@
 import { SVGProps } from 'react';
 
 type Props = {
-  size: number;
   id: string;
+  size?: number;
 } & SVGProps<SVGSVGElement>;
 
-const Icon = ({ size, id, ...rest }: Props) => {
+const Icon = ({ id, size = 24, ...rest }: Props) => {
   return (
     <svg width={size} height={size} {...rest}>
       <use href={`/icons/sprite.svg#${id}`} />

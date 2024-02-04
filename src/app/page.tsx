@@ -9,8 +9,8 @@ export default function Home() {
         </div>
         <div className="scrollbar-fix flex-1 space-y-2 overflow-y-scroll p-3 font-medium text-gray-300">
           <p className="text-white">Friends</p>
-          <div>
-            <Icon size={128} id="arrow" className="fill-slate-300 text-white" />
+          <div className="bg-white">
+            <Icon id="arrow" size={128} className="fill-slate-800" />
           </div>
         </div>
       </div>
