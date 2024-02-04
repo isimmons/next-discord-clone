@@ -38,19 +38,23 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
         </span>
       </div>
 
-      <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
+      {channel?.description && (
+        <>
+          <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
 
-      <div className="group relative w-full">
-        <div className="mx-2 max-w-[300px] truncate text-sm font-medium text-gray-200 ">
-          {channel?.description}
-        </div>
-        <div
-          id="channel-description-tooltip"
-          className="absolute top-1 hidden rounded-sm border bg-slate-800 p-1 text-sm font-medium text-gray-200 group-hover:block"
-        >
-          {channel?.description}
-        </div>
-      </div>
+          <div className="group relative w-full">
+            <div className="mx-2 max-w-xs truncate text-sm font-medium text-gray-200 ">
+              {channel.description}
+            </div>
+            <div
+              id="channel-description-tooltip"
+              className="absolute top-1 hidden whitespace-nowrap rounded-sm border bg-slate-800 p-1 text-sm font-medium text-gray-200 group-hover:block"
+            >
+              {channel.description}
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="ml-auto flex items-center">
         <button className="text-gray-200 hover:text-gray-100">
