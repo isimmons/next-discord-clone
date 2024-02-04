@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getChannelBySlugByServerId } from '~/actions';
 import Icon from './Icon';
 import { IconName } from '~/types/svg-icons';
+import { Tooltip } from 'flowbite-react';
 
 type Props = {
   server: Server;
@@ -42,7 +43,8 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
       </div>
 
       <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
-      <div className="mx-2 truncate text-sm font-medium text-gray-200">
+
+      <div className="group relative mx-2 truncate text-sm font-medium text-gray-200 ">
         {channel?.description}
       </div>
 
@@ -61,6 +63,8 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
         </button>
         <div className="relative mx-2">
           <input
+            id="search"
+            name="search"
             type="text"
             placeholder="Search"
             className="h-6 w-36 rounded border-none bg-gray-900 px-1.5 text-sm font-medium placeholder-gray-400"

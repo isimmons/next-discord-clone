@@ -1,6 +1,7 @@
 import { type Metadata } from 'next';
 import favicon from '~/assets/favicon.png';
 import '~/assets/styles/globals.css';
+
 import Document from './Document';
 
 export const metadata: Metadata = {

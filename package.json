@@ -13,6 +13,8 @@
     "@prisma/client": "^5.8.1",
     "@types/fs-extra": "^11.0.4",
     "date-fns": "^3.3.1",
+    "flowbite": "^2.2.1",
+    "flowbite-react": "^0.7.2",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
     "next": "14.1.0",
