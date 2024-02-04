@@ -3,7 +3,8 @@
 import { type Server } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { getChannelBySlugByServerId } from '~/actions';
-import * as Icons from '~/components/Icons';
+import Icon from './Icon';
+import { IconName } from '~/types/svg-icons';
 
 type Props = {
   server: Server;
@@ -26,10 +27,15 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
     loadChannel();
   }, [server, channelSlug]);
 
+  const iconId = channel?.icon ? (channel.icon as IconName) : 'hashtag';
+
   return (
     <div className="flex h-12 items-center px-2 shadow-sm">
       <div className="flex items-center">
-        <Icons.Hashtag className="mx-2 h-6 w-6 font-semibold text-gray-400" />
+        <Icon
+          id={iconId}
+          className="mx-2 h-6 w-6 font-semibold text-gray-400"
+        />
         <span className="mr-2 whitespace-nowrap font-title text-white">
           {channel?.label}
         </span>
@@ -42,16 +48,16 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
 
       <div className="ml-auto flex items-center">
         <button className="text-gray-200 hover:text-gray-100">
-          <Icons.HashtagWithSpeechBubble className="mx-2 h-6 w-6" />
+          <Icon id="hashtag-with-speech-bubble" className="mx-2 h-6 w-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icons.Bell className="mx-2 h-6 w-6" />
+          <Icon id="bell" className="mx-2 h-6 w-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icons.Pin className="mx-2 h-6 w-6" />
+          <Icon id="pin" className="mx-2 h-6 w-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icons.People className="mx-2 h-6 w-6" />
+          <Icon id="people" className="mx-2 h-6 w-6" />
         </button>
         <div className="relative mx-2">
           <input
@@ -60,14 +66,17 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
             className="h-6 w-36 rounded border-none bg-gray-900 px-1.5 text-sm font-medium placeholder-gray-400"
           />
           <div className="absolute inset-y-0 right-0 flex items-center">
-            <Icons.Spyglass className="mr-1.5 h-4 w-4 text-gray-400" />
+            <Icon
+              id="magnifying-glass"
+              className="mr-1.5 h-4 w-4 text-gray-400"
+            />
           </div>
         </div>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icons.Inbox className="mx-2 h-6 w-6" />
+          <Icon id="inbox" className="mx-2 h-6 w-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icons.QuestionCircle className="mx-2 h-6 w-6" />
+          <Icon id="question-circle" className="mx-2 h-6 w-6" />
         </button>
       </div>
     </div>

@@ -3,7 +3,8 @@
 import { type Channel } from '@prisma/client';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import * as Icons from '~/components/Icons';
+import Icon from './Icon';
+import { IconName } from '~/types/svg-icons';
 
 type Props = {
   channel: Channel;
@@ -33,9 +34,8 @@ const ChannelLink = ({ channel, closedCategories }: Props) => {
       'text-gray-300 hover:bg-gray-550/[0.16] hover:text-gray-100 active:bg-gray-550/[0.24]',
   };
 
-  const Icon = channel.icon
-    ? Icons[channel.icon as keyof typeof Icons]
-    : Icons.Hashtag;
+  const iconId = channel.icon ? (channel.icon as IconName) : 'hashtag';
+
   return (
     <Link
       href={`/servers/${params.serverSlug}/channels/${channel.slug}${closedCatQueryString ? `?cc=${closedCatQueryString}` : ''}`}
@@ -44,10 +44,13 @@ const ChannelLink = ({ channel, closedCategories }: Props) => {
       {activeState === 'inactiveUnread' && (
         <div className="absolute left-0 -ml-2 h-2 w-1 rounded-r-full bg-white"></div>
       )}
-      <Icon className="mr-1.5 size-5 text-gray-400 " />
+      <Icon id={iconId} className="mr-1.5 size-5 text-gray-400 " />
 
       {channel.label}
-      <Icons.AddPerson className="ml-auto size-4 text-gray-200 opacity-0 hover:text-gray-100 group-hover:opacity-100" />
+      <Icon
+        id="add-person"
+        className="ml-auto size-4 text-gray-200 opacity-0 hover:text-gray-100 group-hover:opacity-100"
+      />
     </Link>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 import { type Category } from '@prisma/client';
 import ChannelLinks from './ChannelLinks';
-import { ChevronDownSmall } from './Icons';
+import Icon from './Icon';
 import { type CategoryWithChannels } from '~/types';
 import { type MouseEventHandler } from 'react';
 
@@ -29,7 +29,8 @@ const Category = ({
           }
           className="flex w-full items-center px-0.5 font-title text-xs uppercase tracking-wide hover:text-gray-100"
         >
-          <ChevronDownSmall
+          <Icon
+            id="cheveron-down-small"
             className={`${closedCategories.includes(category.id) ? '-rotate-90' : ''} mr-0.5 size-3 transition duration-200`}
           />
           {category.label}

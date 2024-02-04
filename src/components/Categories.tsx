@@ -1,8 +1,7 @@
 'use client';
 
 import Category from './Category';
-import * as Icons from '~/components/Icons';
-
+import Icon from './Icon';
 import CategoryFallback from './CategoryFallback';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
@@ -23,11 +22,11 @@ const Categories = ({ server }: Props) => {
       <div className="flex w-60 flex-col bg-gray-800">
         <button className="flex h-12 items-center px-4 font-title text-[15px] text-white shadow-sm transition hover:bg-gray-550/[0.16]">
           <div className="relative mr-1 size-4">
-            <Icons.Verified className="absolute size-4 text-gray-550" />
-            <Icons.Check className="absolute size-4" />
+            <Icon id="verified" className="absolute size-4 text-gray-550" />
+            <Icon id="check" className="absolute size-4" />
           </div>
           {server.label}
-          <Icons.ChevronDown className="ml-auto size-[18px] opacity-80" />
+          <Icon id="cheveron-down" className="ml-auto size-[18px] opacity-80" />
         </button>
 
         <div className="scrollbar-fix flex-1 space-y-[21px] overflow-y-scroll pt-3 font-medium text-gray-300">
