@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { getChannelBySlugByServerId } from '~/actions';
 import Icon from './Icon';
 import { IconName } from '~/types/svg-icons';
-import { Tooltip } from 'flowbite-react';
 
 type Props = {
   server: Server;
@@ -33,10 +32,7 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
   return (
     <div className="flex h-12 items-center px-2 shadow-sm">
       <div className="flex items-center">
-        <Icon
-          id={iconId}
-          className="mx-2 h-6 w-6 font-semibold text-gray-400"
-        />
+        <Icon id={iconId} className="mx-2 size-6 font-semibold text-gray-400" />
         <span className="mr-2 whitespace-nowrap font-title text-white">
           {channel?.label}
         </span>
@@ -44,8 +40,16 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
 
       <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
 
-      <div className="group relative mx-2 truncate text-sm font-medium text-gray-200 ">
-        {channel?.description}
+      <div className="group relative w-full">
+        <div className="mx-2 max-w-[300px] truncate text-sm font-medium text-gray-200 ">
+          {channel?.description}
+        </div>
+        <div
+          id="channel-description-tooltip"
+          className="absolute top-1 hidden rounded-sm border bg-slate-800 p-1 text-sm font-medium text-gray-200 group-hover:block"
+        >
+          {channel?.description}
+        </div>
       </div>
 
       <div className="ml-auto flex items-center">
