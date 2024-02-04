@@ -80,7 +80,7 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
           <div className="absolute inset-y-0 right-0 flex items-center">
             <Icon
               id="magnifying-glass"
-              className="mr-1.5 h-4 w-4 text-gray-400"
+              className="mr-1.5 size-4 text-gray-400"
             />
           </div>
         </div>
