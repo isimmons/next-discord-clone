@@ -19,7 +19,7 @@ const Category = ({
   closeCategory,
 }: Props) => {
   return (
-    <div>
+    <>
       {category && (
         <button
           onClick={
@@ -38,7 +38,7 @@ const Category = ({
       )}
 
       <ChannelLinks category={category} closedCategories={closedCategories} />
-    </div>
+    </>
   );
 };
 
