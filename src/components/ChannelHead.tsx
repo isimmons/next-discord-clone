@@ -40,26 +40,37 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
 
       {channel?.description && (
         <>
-          <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
+          <div className="mx-2 hidden h-6 w-px bg-white/[.06] md:block"></div>
 
-          <div className="mx-2 truncate text-sm font-medium text-gray-200 ">
+          <div className="mx-2 hidden truncate text-sm font-medium text-gray-200 md:block ">
             {channel.description}
           </div>
         </>
       )}
 
-      <div className="ml-auto flex items-center">
+      {/* mobile buttons */}
+      <div className="ml-auto flex items-center md:hidden">
         <button className="text-gray-200 hover:text-gray-100">
-          <Icon id="hashtag-with-speech-bubble" className="mx-2 h-6 w-6" />
+          <Icon id="hashtag-with-speech-bubble" className="mx-2 size-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icon id="bell" className="mx-2 h-6 w-6" />
+          <Icon id="people" className="mx-2 size-6" />
+        </button>
+      </div>
+
+      {/* desktop buttons */}
+      <div className="ml-auto hidden items-center md:flex">
+        <button className="text-gray-200 hover:text-gray-100">
+          <Icon id="hashtag-with-speech-bubble" className="mx-2 size-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icon id="pin" className="mx-2 h-6 w-6" />
+          <Icon id="bell" className="mx-2 size-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icon id="people" className="mx-2 h-6 w-6" />
+          <Icon id="pin" className="mx-2 size-6" />
+        </button>
+        <button className="text-gray-200 hover:text-gray-100">
+          <Icon id="people" className="mx-2 size-6" />
         </button>
         <div className="relative mx-2">
           <input
@@ -77,10 +88,10 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
           </div>
         </div>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icon id="inbox" className="mx-2 h-6 w-6" />
+          <Icon id="inbox" className="mx-2 size-6" />
         </button>
         <button className="text-gray-200 hover:text-gray-100">
-          <Icon id="question-circle" className="mx-2 h-6 w-6" />
+          <Icon id="question-circle" className="mx-2 size-6" />
         </button>
       </div>
     </div>

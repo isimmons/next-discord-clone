@@ -9,7 +9,7 @@ type Props = {
 
 const ServerLinks = ({ servers }: Props) => {
   return (
-    <div className="scrollbar-fix space-y-2 overflow-y-scroll bg-gray-900 p-3 px-4">
+    <div className="scrollbar-fix hidden space-y-2 overflow-y-scroll bg-gray-900 p-3 px-4 md:block">
       <ServerLink to="/">
         <Discord className="h-5 w-7" />
       </ServerLink>

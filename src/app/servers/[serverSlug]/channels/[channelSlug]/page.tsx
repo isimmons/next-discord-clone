@@ -21,7 +21,7 @@ const ServerPage = ({ params: { serverSlug, channelSlug } }: Props) => {
 
   return (
     <>
-      <div className="flex w-60 flex-col bg-gray-800">
+      <div className="hidden w-60 flex-col bg-gray-800 md:flex">
         <Categories server={server} />
       </div>
 
