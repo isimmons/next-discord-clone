@@ -30,7 +30,7 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
   const iconId = channel?.icon ? (channel.icon as IconName) : 'hashtag';
 
   return (
-    <div className="flex h-12 items-center px-2 shadow-sm">
+    <div className="flex h-12  items-center px-2 shadow-sm">
       <div className="flex items-center">
         <Icon id={iconId} className="mx-2 size-6 font-semibold text-gray-400" />
         <span className="mr-2 whitespace-nowrap font-title text-white">
@@ -42,16 +42,8 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
         <>
           <div className="mx-2 h-6 w-px bg-white/[.06]"></div>
 
-          <div className="group relative w-full">
-            <div className="mx-2 max-w-xs truncate text-sm font-medium text-gray-200 ">
-              {channel.description}
-            </div>
-            <div
-              id="channel-description-tooltip"
-              className="absolute top-1 hidden whitespace-nowrap rounded-sm border bg-slate-800 p-1 text-sm font-medium text-gray-200 group-hover:block"
-            >
-              {channel.description}
-            </div>
+          <div className="mx-2 truncate text-sm font-medium text-gray-200 ">
+            {channel.description}
           </div>
         </>
       )}
