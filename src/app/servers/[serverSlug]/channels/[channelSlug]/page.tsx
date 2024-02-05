@@ -1,7 +1,5 @@
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 import Categories from '~/components/Categories';
-import CategoryFallback from '~/components/CategoryFallback';
 import ChannelHead from '~/components/ChannelHead';
 import Messages from '~/components/Messages';
 import prisma from '~/db';
@@ -28,12 +26,8 @@ const ServerPage = ({ params: { serverSlug, channelSlug } }: Props) => {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-shrink flex-col bg-gray-700">
-        <Suspense fallback={<p>Foobar</p>}>
-          <ChannelHead channelSlug={channelSlug} server={server} />
-        </Suspense>
-        <Suspense fallback={<p>Loading messages...</p>}>
-          <Messages channelSlug={channelSlug} serverId={server?.id} />
-        </Suspense>
+        <ChannelHead channelSlug={channelSlug} server={server} />
+        <Messages channelSlug={channelSlug} serverId={server?.id} />
       </div>
     </>
   );
