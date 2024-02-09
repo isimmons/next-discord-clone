@@ -30,7 +30,7 @@ const ChannelHead = ({ server, channelSlug }: Props) => {
   const iconId = channel?.icon ? (channel.icon as IconName) : 'hashtag';
 
   return (
-    <div className="flex h-12  items-center px-2 shadow-sm">
+    <div className="flex h-12 max-w-screen-lg   items-center px-2 shadow-sm sm:max-w-screen-sm md:max-w-screen-md">
       <div className="flex items-center">
         <Icon id={iconId} className="mx-2 size-6 font-semibold text-gray-400" />
         <span className="mr-2 whitespace-nowrap font-title text-white">
